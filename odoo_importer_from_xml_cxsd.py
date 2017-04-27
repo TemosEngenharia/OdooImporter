@@ -7,48 +7,29 @@
 # INSERT ON ODOO TABLES BASED ON CXSD/XML
 #
 
+
 import datetime
-
-try:
-  from lxml import etree
-  print("running with lxml.etree")
-except ImportError:
-  try:
-    # Python 2.5
-    import xml.etree.cElementTree as etree
-    print("running with cElementTree on Python 2.5+")
-  except ImportError:
-    try:
-      # Python 2.5
-      import xml.etree.ElementTree as etree
-      print("running with ElementTree on Python 2.5+")
-    except ImportError:
-      try:
-        # normal cElementTree install
-        import cElementTree as etree
-        print("running with cElementTree")
-      except ImportError:
-        try:
-          # normal ElementTree install
-          import elementtree.ElementTree as etree
-          print("running with ElementTree")
-        except ImportError:
-          print("Failed to import ElementTree from any known place")
-
+import odoo_importer_from_xml_cxsd_config as config 
+import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
 
 def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
 	status = False
 	
-	pyIdent = "    "
+	#pyIdent = "    "
 
 	#Write Output Odoo Structure
 	output = '# -*- coding: utf-8 -*-\n# ATT Generated at {0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
 	output = output + "\n\nfrom odoo import models, fields, api\n"
 
+	sqlInsertFormat = "INSERT INTO {0} (\n {1} \n) VALUES (\n {2} \n);"
+	sqlInsertOutput = ""
+
 	cxsd = schema_Parsed_Root
-	
 	schema_Parsed_Root = None #saving memory
+
+	xmlDoc = xmldoc_Parsed_Root
+	xmldoc_Parsed_Root = None
 
 	modelsClasses = []
 	modelFields = []
@@ -75,7 +56,7 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 			if cxsdElem.get('nodeType') in allowedNodeTypes:
 
 				#Getting Node Attributes Values
-				cxsdElemAttribValues = [
+				commomElemAttribValues = [
 					cxsdElem.get('nodeType'),
 					cxsdElem.get('nodePath'),
 					cxsdElem.get('odooClass'),
@@ -84,14 +65,14 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 					]
 					
 				#Zip method, which combines two iterables and make it dictionary
-				cxsdElemAttribDict = dict(zip(commonNodeAttributes, cxsdElemAttribValues)) 
+				commomElemAttribDict = dict(zip(commonNodeAttributes, commomElemAttribValues)) 
 
 
 				#Simple Classes List
 				if cxsdElem.get('nodeType') == "simpleClass":
 
 					#Get Commom Attributes
-					nodesAttributes = commonNodeAttributes
+					nodesAttributes = list(commonNodeAttributes)
 					
 					#Add Specific Nodes
 					nodesAttributes.append("odooRecName")
@@ -112,37 +93,55 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 					cxsdElemAttribDict = dict(zip(nodesAttributes, cxsdElemAttribValues)) 
 					
 					#Keep on memory
-					modelsClasses.append(cxsdElemAttribDict)
-				
+					modelsClasses.append(commomElemAttribDict)
+
 				elif cxsdElem.get('nodeType') == "simple":
 				
-					modelFields.append(cxsdElemAttribDict)
+					modelFields.append(commomElemAttribDict)
 
 				elif cxsdElem.get('nodeType') == "complex":
 				
-					modelFields.append(cxsdElemAttribDict)
+					modelFields.append(commomElemAttribDict)
 
 				elif cxsdElem.get('nodeType') == "multipleField":
 				
-					modelFields.append(cxsdElemAttribDict)
+					modelFields.append(commomElemAttribDict)
 
 				elif cxsdElem.get('nodeType') == "complexFieldIdValue":
 				
-					modelFields.append(cxsdElemAttribDict)
+					modelFields.append(commomElemAttribDict)
 
 				elif cxsdElem.get('nodeType') == "complexFieldIdRows":
 				
+					modelFields.append(commomElemAttribDict)
+
+				elif cxsdElem.get('nodeType') in ["extraField", "relationship"]:
+					
+					#Get Copy of Commom Attributes
+					nodesAttributes = list(commonNodeAttributes)
+					
+					#Add Specific Nodes
+					nodesAttributes.append("getValueOf")
+
+					#Getting Node Attributes Values
+					cxsdElemAttribValues = [
+						cxsdElem.get('nodeType'),
+						cxsdElem.get('nodePath'),
+						cxsdElem.get('odooClass'),
+						cxsdElem.get('odooField'),
+						cxsdElem.get('odooDT'),
+						cxsdElem.get('getValueOf')
+					]
+					
+					#Zip method, which combines two iterables and make it dictionary
+					cxsdElemAttribDict = dict(zip(nodesAttributes, cxsdElemAttribValues)) 
+
 					modelFields.append(cxsdElemAttribDict)
 
-				elif cxsdElem.get('nodeType') == "extraField":
+				#elif cxsdElem.get('nodeType') == "relationship":
 				
-					modelFields.append(cxsdElemAttribDict)
+				#	modelFields.append(commomElemAttribDict)
 
-				elif cxsdElem.get('nodeType') == "relationship":
-				
-					modelFields.append(cxsdElemAttribDict)
-
-				cxsdElemAttribValues.clear #Saving Memory
 					
 		cxsdElem.clear #Saving Memory
 
@@ -156,57 +155,13 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 			
 			#Model Class Name
 			modelClassName = modelsClasses[i]['odooClass']
-			
-			#rec_name
-			modelClassRecName = modelsClasses[i]['odooRecName']
 
-			#sql_constraints
-			modelClassSQLConstraints = modelsClasses[i]['odooSQLConstraints']
+			#Transform Table Name (Dot to Underlines)
+			tableClassName = 'public.' + modelsClasses[i]['odooDT'].replace('.', '_')
 
-			#Write Odoo Class Name
-			output = "{}\nclass {}(models.Model):\n".format(output, modelClassName)
-
-			#Write Odoo Default Name Field
-			output = "\n{}{}{} = '{}'\n".format(
-												output, 
-												pyIdent, 
-												modelsClasses[i]['odooField'], 
-												modelsClasses[i]['odooDT']
-												)
-			if not modelClassRecName == "":
-				#Write Odoo Rec Name Field
-				output = "{}{}_rec_name = '{}'\n".format(
-													output,
-													pyIdent,
-													modelClassRecName
-													)
-
-			if not modelClassSQLConstraints == "":
-				#Write Odoo Constraints Definition
-				output = "{}{}_sql_constraints = {}\n".format(
-													output,
-													pyIdent,
-													modelClassSQLConstraints
-													)
-			#line for beautify
-			output = output + "\n"
-
-# TENTATIVA DE REMOVE ITEM DA LISTA APOS USO, MAS DA ERRO DE LIST INDEX OUT OF RANGE
-# TALVEZ FAZER UMA LISTA DE USADOS E DEPOIS MANDAR EXCLUIR QUANDO SAIR DO FOR			
-#			#Fields Loop
-#			for f in range(len(modelFields)):
-#				#Keep only field where Class Name matches
-#				if modelFields[f]['odooClass']==modelClassName:	
-#					
-#					#Write Odoo Default Name Field
-#					output = '\n{}{}{} = "{}"\n'.format(
-#														output, 
-#														pyIdent, 
-#														modelFields[f]['odooField'], 
-#														modelFields[f]['odooDT']
-#														)
-#
-#					del modelFields[f-1]
+			#init fields names list and values list
+			fieldsNamesList = []
+			fieldsValuesList = []
 
 			#Fields Loop
 			for field in modelFields:
@@ -217,33 +172,151 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 					#Only odoo fields and datatype defined
 					if not ((field['odooField'] == "") and (field['odooDT'] == "")):
 
-						#Write Odoo Default Name Field
-						output = '\n{}{}{} = {}\n'.format(
-															output, 
-															pyIdent, 
-															field['odooField'], 
-															field['odooDT']
-															)
-						#TENTATIVA NAO DEU CERTO TBM
-						#Remove Field Used for saving process and memory 
-						#modelFields.remove(field)
+						#Get Field Name
+						fieldName = field['odooField']
+
+
+						#Append Field Name
+						fieldsNamesList.append(fieldName)
+
+						#Get Odoo Datatype
+						fieldDataType = field['odooDT']
+						
+						#Deal with custom fields with has not value on xml
+						if field['nodeType'] in ["extraField", "relationship"]:
+							#Get value for this field on xml
+							fieldValue = getValueForNodeType(field['nodeType'], "", field['getValueOf'])
+						else:
+							#Get value for this field on xml
+							fieldValue = getValueForNodeType(field['nodeType'], xmlDoc.xpath(field["nodePath"]), "")
+							
+						print(fieldName+" : "+fieldValue+" : "+ field["nodePath"] +"\n")
+
+						#Append value formatted for sql datatype
+						fieldsValuesList.append(getFormattedValue(fieldDataType, fieldValue))
+
+
+
+					
+
+			
+			#Fields of Oddo Internal Control
+			fieldsNamesOdoo = "entry_form_file_id, write_date, entry_form_file_data, entry_form_file_description"
+			fieldsValuesOdoo = "entry_form_file_id, write_date, entry_form_file_data, entry_form_file_description"
+
+			#fieldsNamesList.append(fieldsNamesOdoo.split(", "))
+			#fieldsValuesList.append(fieldsValuesOdoo.split(", "))
+
+			print(fieldsNamesList)
+			print(fieldsValuesList)
+
+			#Fields and Values from XML to SQL
+			fieldsNames = ', '.join(fieldsNamesList)
+			fieldsValues = ', '.join(fieldsValuesList)
+
+
+			
+			#Write Odoo Default Name Field
+			#field['odooField'], 
+			#field['odooDT']
+						
+			#TENTATIVA NAO DEU CERTO TBM
+			#Remove Field Used for saving process and memory 
+			#modelFields.remove(field)
+
+			sqlInsertOutput = sqlInsertOutput + "\n" + sqlInsertFormat.format(
+																tableClassName,
+																fieldsNames,
+																fieldsValues
+																)
+
+		#sqlInsertFormat = "INSERT INTO {0} (\n {1} \n) VALUES (\n {2} \n);"
+	
+	# entry_form_file_id, write_date, entry_form_file_data, entry_form_file_description)
+	#VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
 	status = True
 
-	return status, output.lstrip() #Removes empty lines before 
+	return status, sqlInsertOutput.lstrip() #Removes empty lines before 
 
 
+
+def getValueForNodeType(nodeType, xmlDoc_XPath_nodePath, getValueOfFunction):
+						
+	outputValue=""
+
+	#Deal with custom fields with has not value on xml
+	if nodeType in "extraField":
+
+		#Testing User Custom Functions and handling it on error case
+		getValueOf = "cfuncs." + getValueOfFunction
+
+		try:
+		    outputValue = eval(getValueOf)
+		     
+		except AttributeError:
+
+			outputValue = 'ERR:' + getValueOfFunction
+
+
+	#Deal with custom fields with has not value on xml
+	elif nodeType in "relationship":
+
+		#Testing User Custom Functions and handling it on error case
+		getValueOf = "cfuncs." + getValueOfFunction
+
+		try:
+		    outputValue = eval(getValueOf)
+		     
+		except AttributeError:
+
+			outputValue = 'ERR:' + getValueOfFunction
+
+
+	else:
+
+		outputValue=xmlDoc_XPath_nodePath[0].text
+
+	return outputValue
+						
+						
+
+def getFormattedValue(format, value):
+
+	if format.startswith("fields.Char("):
+		return "'{}'".format(value)
+
+	elif format.startswith("fields.Integer("):
+		return value
+
+	elif format.startswith("fields.Binary("):
+		return value
+
+	else:
+		return value
+
+
+	
 def writeOut(outputText, filename):
 	with open(filename,"w+") as f:
 		f.write(outputText)
+
+
 
 def strip_one_space(s):
     if s.endswith(" "): s = s[:-1]
     if s.startswith(" "): s = s[1:]
     return s
 
+
+
 #---------------------------------------------------
 def main():
+
+	#Start Up Settings
+	config.init("dev_mode")
+
+	print(config.settings)
 
 	#---------------------------------------------------
 	#TESTS
@@ -266,13 +339,9 @@ def main():
 	#---------------------------------------------------
 	# RUNNING
 
-	inputXMLFile = "../OdooImporterData/corretiva_v20/xml/corretiva_v20_20170110-121749.xml"
-	inputXSDFile = "../OdooImporterData/corretiva_v20/schemas/corretiva_v20_20170110.cxsd"
+	schema_Parsed_Root = config.etree.parse(config.inputCXSDFile).getroot()
+	xmldoc_Parsed_Root = config.etree.parse(config.inputXMLFile).getroot()
 
-	parser = etree.XMLParser() 
-	
-	schema_Parsed_Root = etree.parse(inputXSDFile).getroot()
-	xmldoc_Parsed_Root = etree.parse(inputXMLFile).getroot()
 
 	#status, outputText = odooGenerateOrmFromCXSD(cxsdSchema)
 
@@ -287,7 +356,7 @@ def main():
 	print("\n#EOF status:" + str(status))
 
 
-
+	#print(cfuncs.getXMLFilename())
 
 
 

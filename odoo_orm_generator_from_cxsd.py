@@ -1,5 +1,6 @@
 
 #
+# ATT 2017-04-26 v.v10.0.49
 # ATT 2017-04-25 v.v10.0.48
 #
 # TOOLS FOR ODOO 10+
@@ -8,32 +9,8 @@
 #
 
 import datetime
-
-try:
-  from lxml import etree
-  print("running with lxml.etree")
-except ImportError:
-  try:
-    # Python 2.5
-    import xml.etree.cElementTree as etree
-    print("running with cElementTree on Python 2.5+")
-  except ImportError:
-    try:
-      # Python 2.5
-      import xml.etree.ElementTree as etree
-      print("running with ElementTree on Python 2.5+")
-    except ImportError:
-      try:
-        # normal cElementTree install
-        import cElementTree as etree
-        print("running with cElementTree")
-      except ImportError:
-        try:
-          # normal ElementTree install
-          import elementtree.ElementTree as etree
-          print("running with ElementTree")
-        except ImportError:
-          print("Failed to import ElementTree from any known place")
+import odoo_importer_from_xml_cxsd_config as config 
+#import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
 
 
 def odooGenerateOrmFromCXSD(schema_Parsed_Root):
@@ -91,7 +68,7 @@ def odooGenerateOrmFromCXSD(schema_Parsed_Root):
 				if element.get('nodeType') == "simpleClass":
 
 					#Get Commom Attributes
-					nodesAttributes = commonNodeAttributes
+					nodesAttributes = list(commonNodeAttributes)
 					
 					#Add Specific Nodes
 					nodesAttributes.append("odooRecName")
@@ -245,55 +222,34 @@ def strip_one_space(s):
 #---------------------------------------------------
 def main():
 
-	#---------------------------------------------------
-	#TESTS
+	#Start Up Settings
+	config.init("dev_mode")
 
-	#def findElements():
-	#	elements = []
-	#	for name in names: 
-	#	    namedElements = xmlDoc.xpath("//*[local-name() = $name]", name=name)
-	#	    elements.extend(namedElements)
-	#	return elements
+	print(config.settings)
 
 
-	#def getElems(schemaDoc, xmlDoc, typeName):
-	#    names = schemaDoc.xpath("//xsd:element[@type = $n]/@name",
-	#                            namespaces={"xsd": 
-	#                                        "http://www.w3.org/2001/XMLSchema"},
-	#                            n=typeName)
-
-
-	#---------------------------------------------------
 	# RUNNING
 
-	#inputXMLFile = "../corretiva_v20/xml/corretiva_v20_20170110-121749.xml"
-	inputXMLFile = "../OdooImporterData/corretiva_v20/schemas/corretiva_v20_20170110.cxsd"
+	#Generate using Schema CXSD
+	status, outputText = odooGenerateOrmFromCXSD(config.etree.parse(config.inputCXSDFile).getroot())
 
-	parser = etree.XMLParser() 
-	
-	cxsdSchema = etree.parse(inputXMLFile).getroot()
+	#Save on file model.py for odoo
+	writeOut(outputText,config.outputORMFile)
 
-	status, outputText = odooGenerateOrmFromCXSD(cxsdSchema)
+	#Save in Data Domain
+	writeOut(outputText,config.outputORMFile_InDataDomain)
 
-	#outputText = strip_one_space(outputText)
-
-	writeOut(outputText,"/Users/andersontagata/TemosEngenharia/custom-addons/corretiva/models/corretiva_model_v20.py")
-	writeOut(outputText,"../OdooImporterData/corretiva_v20/models/corretiva_model_v20.py")
-
+	#Show result on prompt
 	print(outputText)
 	print("\n#EOF status:" + str(status))
-
-
-
-
-
-
 
 
 
 #---------------------------------------------------
 if __name__ == "__main__":
 	main()
+
+
 
 
 
