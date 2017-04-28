@@ -9,6 +9,11 @@
  
 import odoo_importer_from_xml_cxsd_config as config
 import odoo_importer_from_xml_cxsd as importer
+import sys
+import random
 
 def getXMLFilename():
 	return config.inputXMLFileName
+
+def getRandomNumber():
+	return str(random.randint(0, sys.maxsize))

@@ -1,5 +1,6 @@
 
 #
+# ATT 2017-04-26 v.v10.0.50 - Added new type of Class (mainClass and childClass)
 # ATT 2017-04-26 v.v10.0.49
 # ATT 2017-04-25 v.v10.0.48
 #
@@ -35,7 +36,7 @@ def odooGenerateOrmFromCXSD(schema_Parsed_Root):
 	#  Nodes without attributes will be ignored
 	commonNodeAttributes = ["nodeType", "nodePath", "odooClass", "odooField", "odooDT"]
 
-	allowedNodeTypes = ["simpleClass", "simple", "complex", "multipleField", 
+	allowedNodeTypes = ["mainClass", "childClass", "simple", "complex", "multipleField", 
 						"complexFieldIdValue", "complexFieldIdRows", "extraField", 
 						"relationship"
 						]
@@ -65,7 +66,7 @@ def odooGenerateOrmFromCXSD(schema_Parsed_Root):
 
 
 				#Simple Classes List
-				if element.get('nodeType') == "simpleClass":
+				if element.get('nodeType') in ["mainClass", "childClass"]:
 
 					#Get Commom Attributes
 					nodesAttributes = list(commonNodeAttributes)
