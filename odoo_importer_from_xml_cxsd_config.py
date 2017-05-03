@@ -1,12 +1,13 @@
 
 #
+# ATT 2017-04-26 v10.0.52 - New odoo config loader
 # ATT 2017-04-26 v10.0.1
 #
 # TOOLS
 #
 # SETTINGS
 #
-
+from db_config import odoo_config
 
 try:
   from lxml import etree
@@ -36,30 +37,52 @@ except ImportError:
 
 def init(arg):
 	
-	global settings
-	settings = []
-	settings.append(arg)
+  global settings
+  settings = []
+  settings.append(arg)
 
-	global inputXMLPath, inputXMLFileName, inputXMLFile
-	global inputCXSDPath, inputCXSDFileName, inputCXSDFile
-	
-	inputXMLPath = "../OdooImporterData/corretiva_v20/xml/" 
-	inputXMLFileName = "corretiva_v20_20170110-121749.xml"
-	inputXMLFile = inputXMLPath + inputXMLFileName
+  global inputXMLPath, inputXMLFileName, inputXMLFile
+  global inputCXSDPath, inputCXSDFileName, inputCXSDFile
 
-	inputCXSDPath = "../OdooImporterData/corretiva_v20/schemas/"
-	inputCXSDFileName = "corretiva_v20_20170110.cxsd"
-	inputCXSDFile = inputCXSDPath + inputCXSDFileName
+  inputXMLPath = "../OdooImporterData/corretiva_v20/xml/" 
+  inputXMLFileName = "corretiva_v20_20170110-121749.xml"
+  #inputXMLFileName = "COR16_1.xml"
+  #inputXMLFileName = "COR16_2.xml"
+  #inputXMLFileName = "COR19_1.xml"
+  #inputXMLFileName = "COR20_1.xml"
+  #inputXMLFileName = "COR20_2.xml"
+  #inputXMLFileName = "COR20_3.xml"
+  #inputXMLFileName = "COR20_4.xml"
+  #inputXMLFileName = "COR20_5.xml" #faltava um field Checkout PA
 
-	global outputORMPath, outputORMFileName, outputORMFile
-	outputORMPath = "/Users/andersontagata/TemosEngenharia/custom-addons/corretiva/models/"
-	outputORMFileName = "corretiva_model.py"
-	outputORMFile = outputORMPath + outputORMFileName
 
-	global outputORMPath_InDataDomain, outputORMFileName_InDataDomain, outputORMFile_InDataDomain
-	outputORMPath_InDataDomain = "../OdooImporterData/corretiva_v20/models/"
-	outputORMFileName_InDataDomain = "corretiva_model.py"
-	outputORMFile_InDataDomain = outputORMPath_InDataDomain + outputORMFileName_InDataDomain
+  inputXMLFile = inputXMLPath + inputXMLFileName
+
+  inputCXSDPath = "../OdooImporterData/corretiva_v20/schemas/"
+  inputCXSDFileName = "corretiva_v20_20170110.cxsd"
+  inputCXSDFile = inputCXSDPath + inputCXSDFileName
+
+  #custom global var
+  global main_id
+  global formDateTime
+
+  global odooConfig
+  odooConfigDict = odoo_config() #comes from db_tools + db_config.ini
+
+  global outputORMPath, outputORMFileName, outputORMFile
+  outputORMPath = "/Users/andersontagata/TemosEngenharia/custom-addons/corretiva/models/"
+  outputORMFileName = "corretiva_model.py"
+  outputORMFile = outputORMPath + outputORMFileName
+
+  global outputORMPath_InDataDomain, outputORMFileName_InDataDomain, outputORMFile_InDataDomain
+  outputORMPath_InDataDomain = "../OdooImporterData/corretiva_v20/models/"
+  outputORMFileName_InDataDomain = "corretiva_model.py"
+  outputORMFile_InDataDomain = outputORMPath_InDataDomain + outputORMFileName_InDataDomain
+
+
+
+
+
 
 
 

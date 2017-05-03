@@ -1,5 +1,6 @@
 
 #
+# ATT 2017-05-02 v.v10.0.51 - new child class and relationship
 # ATT 2017-04-26 v.v10.0.50 - Added new type of Class (mainClass and childClass)
 # ATT 2017-04-26 v.v10.0.49
 # ATT 2017-04-25 v.v10.0.48
@@ -38,7 +39,7 @@ def odooGenerateOrmFromCXSD(schema_Parsed_Root):
 
 	allowedNodeTypes = ["mainClass", "childClass", "simple", "complex", "multipleField", 
 						"complexFieldIdValue", "complexFieldIdRows", "extraField", 
-						"relationship"
+						"relationship", "mainFields", "childField", "childFieldData"
 						]
 
 	#Load XML Schema
@@ -101,6 +102,10 @@ def odooGenerateOrmFromCXSD(schema_Parsed_Root):
 					modelFields.append(elementAttribDict)
 
 				elif element.get('nodeType') == "multipleField":
+				
+					modelFields.append(elementAttribDict)
+
+				elif element.get('nodeType') in ["mainFields", "childField", "childFieldData"]:
 				
 					modelFields.append(elementAttribDict)
 
@@ -225,6 +230,8 @@ def main():
 
 	#Start Up Settings
 	config.init("dev_mode")
+
+	config.main_id = -1
 
 	print(config.settings)
 
