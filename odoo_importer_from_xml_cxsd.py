@@ -1,5 +1,6 @@
 
 #
+# ATT 2017-05-02 v10.0.53 - Record special fields on postgresql (create and write (date and uid)) + Force Content for Add Rem childs
 # ATT 2017-05-02 v10.0.52 - New odoo Functions / Insert of Main and Childs working fine / Delete before Add repeated file
 # ATT 2017-05-02 v10.0.51 - New odoo Functions / Insert of Main and Childs error on insert childs
 # ATT 2017-04-27 v10.0.50 - Allowing multiple Inserts for Childs Classes
@@ -15,6 +16,11 @@ import datetime
 import odoo_importer_from_xml_cxsd_config as config 
 import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
 import db_tools as dbtools 
+from os import listdir
+from os.path import isfile, join
+from os import walk
+
+from os import rename
 
 def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
@@ -251,13 +257,18 @@ def mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValue
 	sqlInsertFormat = "INSERT INTO {0} (\n {1} \n) VALUES (\n {2} \n) RETURNING {3};"
 	
 	#Fields of Oddo Internal Control
-	fieldsNamesOdoo = "entry_form_file_id, write_date, entry_form_file_data, entry_form_file_description"
-	fieldsValuesOdoo = "entry_form_file_id, write_date, entry_form_file_data, entry_form_file_description"
+	fieldsNamesOdoo = "create_date, write_date, create_uid, write_uid"
+	fieldsValuesOdoo = []
+	fieldsValuesOdoo.append("'" + cfuncs.getCurrentDateTimeForSQL() + "'")
+	fieldsValuesOdoo.append("'" + cfuncs.getCurrentDateTimeForSQL() + "'")
+	fieldsValuesOdoo.append(cfuncs.getOdooUserId())
+	fieldsValuesOdoo.append(cfuncs.getOdooUserId())
 
-	#UID ??
+	#print(fieldsValuesOdoo)
+	#exit()
 
-	#fieldsNamesList.append(fieldsNamesOdoo.split(", "))
-	#fieldsValuesList.append(fieldsValuesOdoo.split(", "))
+	fieldsNamesList.extend(fieldsNamesOdoo.split(", "))
+	fieldsValuesList.extend(fieldsValuesOdoo)
 
 	#print(fieldsNamesList)
 	#print(fieldsValuesList)
@@ -266,14 +277,6 @@ def mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValue
 	fieldsNames = ', '.join(fieldsNamesList)
 	fieldsValues = ', '.join(fieldsValuesList)
 	
-	#Write Odoo Default Name Field
-	#field['odooField'], 
-	#field['odooDT']
-				
-	#TENTATIVA NAO DEU CERTO TBM
-	#Remove Field Used for saving process and memory 
-	#modelFields.remove(field)
-
 	return sqlInsertOutput + "\n" + sqlInsertFormat.format(
 														tableClassName,
 														fieldsNames,
@@ -452,7 +455,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 	#Only odoo fields and datatype defined
 
 	if nodeType in ["simple"]:
-		#	print("indexRow["+str(indexRow)+"]"+field['nodePath'])
+		print("indexRow["+str(indexRow)+"]"+field['nodePath'])
 		#Get value for this field on xml
 		outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
 
@@ -529,7 +532,7 @@ def main():
 
 
 	#def getElems(schemaDoc, xmlDoc, typeName):
-	#    names = schemaDoc.xpath("//xsd:element[@type = $n]/@name",
+	#    names = schemaDoc.xpath("//xsd:element[@type = $n]/@name"
 	#                            namespaces={"xsd": 
 	#                                        "http://www.w3.org/2001/XMLSchema"},
 	#                            n=typeName)
@@ -538,18 +541,81 @@ def main():
 	#---------------------------------------------------
 	# RUNNING
 
-	schema_Parsed_Root = config.etree.parse(config.inputCXSDFile).getroot()
-	xmldoc_Parsed_Root = config.etree.parse(config.inputXMLFile).getroot()
 
-	#Custom Vars for Custom Functions
-	config.formDateTime=xmldoc_Parsed_Root.xpath('/Entry/EntryDateFromEpoch')[0].text
-
-	status = odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, False)
-
-	print("\n#EOF status:" + str(status))
-
+	file_prefix = 'COR20'
 	
-	#print(cfuncs.getXMLFilename())
+	config.inputXMLPath = "../OdooImporterData/corretiva_v20/2_QUEUE/" + file_prefix + "/"
+	#inputXMLFileName = "corretiva_v20_20170110-121749.xml"
+	#inputXMLFileName = "COR16_1.xml"
+	#inputXMLFileName = "COR16_2.xml"
+	#inputXMLFileName = "COR19_1.xml"
+	#inputXMLFileName = "COR20_1.xml"
+	#inputXMLFileName = "COR20_2.xml"
+	#inputXMLFileName = "COR20_3.xml"
+	#inputXMLFileName = "COR20_4.xml"
+	#inputXMLFileName = "COR20_5.xml" #faltava um field Checkout PA
+
+	files = []
+	files = [f for f in listdir(config.inputXMLPath) if isfile(join(config.inputXMLPath, f))]
+	print(config.inputXMLPath)
+	print("files in folder:"+str(len(files)))
+	
+	#f = []
+	#for (dirpath, dirnames, filenames) in walk(mypath):
+	#	f.extend(filenames)
+		#break
+
+	#print(dirpath)
+	##print(dirnames)
+	#print(filenames)
+
+#	exit()
+
+	print("\n____________________\n")
+	counter = 0
+
+	for filename in files:
+		if filename[:5]==file_prefix: 
+			counter=counter+1
+			
+	print(file_prefix + " to process:"+str(counter))
+
+
+
+	print("\n____________________\n")
+	#Process all
+	for filename in files:
+		if filename[:len(file_prefix)]==file_prefix: 
+			print("> > > >"+ filename)
+
+			try:
+				config.inputXMLFileName = filename
+				config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
+				
+				print(config.inputXMLFile)
+				print("> > > Processing:" + cfuncs.getXMLFilename())
+
+				schema_Parsed_Root = config.etree.parse(config.inputCXSDFile).getroot()
+				xmldoc_Parsed_Root = config.etree.parse(config.inputXMLFile).getroot()
+
+				#Custom Vars for Custom Functions
+				config.formDateTime=xmldoc_Parsed_Root.xpath('/Entry/EntryDateFromEpoch')[0].text
+
+				status = odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, False)
+
+				print("\n#EOF status:" + str(status))
+
+				
+			except Exception as e:
+				#raise e
+				print("Error:" + config.inputXMLFile + "\n" + str(e))
+				print(config.inputXMLPath + "-" + config.inputXMLFileName)
+
+				rename(config.inputXMLFile, config.inputXMLPath + "-" + config.inputXMLFileName)
+				status = False
+				pass
+	
+		
 
 
 

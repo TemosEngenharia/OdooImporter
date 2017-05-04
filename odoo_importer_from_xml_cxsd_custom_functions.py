@@ -12,8 +12,8 @@ import odoo_importer_from_xml_cxsd_config as config
 import odoo_importer_from_xml_cxsd as importer
 import sys
 import random
+import time
 from datetime import datetime, timezone #Py3
-
 
 def getMainId():
 	return config.main_id
@@ -25,6 +25,8 @@ def getOdooUserId():
 def getOdooUserName():
 	return config.odooConfigDict["odoo_username"]
 
+def getCurrentDateTimeForSQL():
+	return time.strftime('%Y-%m-%d %H:%M:%S')
 
 def getXMLFilename():
 	return config.inputXMLFileName

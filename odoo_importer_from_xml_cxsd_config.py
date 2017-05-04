@@ -9,6 +9,7 @@
 #
 from db_config import odoo_config
 
+
 try:
   from lxml import etree
   print("running with lxml.etree")
@@ -55,7 +56,7 @@ def init(arg):
   #inputXMLFileName = "COR20_4.xml"
   #inputXMLFileName = "COR20_5.xml" #faltava um field Checkout PA
 
-
+  
   inputXMLFile = inputXMLPath + inputXMLFileName
 
   inputCXSDPath = "../OdooImporterData/corretiva_v20/schemas/"
@@ -66,7 +67,7 @@ def init(arg):
   global main_id
   global formDateTime
 
-  global odooConfig
+  global odooConfigDict
   odooConfigDict = odoo_config() #comes from db_tools + db_config.ini
 
   global outputORMPath, outputORMFileName, outputORMFile
