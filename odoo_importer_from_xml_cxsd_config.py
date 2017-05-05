@@ -59,8 +59,8 @@ def init(arg):
   
   inputXMLFile = inputXMLPath + inputXMLFileName
 
-  inputCXSDPath = "../OdooImporterData/corretiva_v20/schemas/"
-  inputCXSDFileName = "corretiva_v20_20170110.cxsd"
+  inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
+  inputCXSDFileName = "COR20.cxsd"
   inputCXSDFile = inputCXSDPath + inputCXSDFileName
 
   #custom global var
@@ -76,16 +76,9 @@ def init(arg):
   outputORMFile = outputORMPath + outputORMFileName
 
   global outputORMPath_InDataDomain, outputORMFileName_InDataDomain, outputORMFile_InDataDomain
-  outputORMPath_InDataDomain = "../OdooImporterData/corretiva_v20/models/"
+  outputORMPath_InDataDomain = "../OdooImporterData/corretiva/models/"
   outputORMFileName_InDataDomain = "corretiva_model.py"
   outputORMFile_InDataDomain = outputORMPath_InDataDomain + outputORMFileName_InDataDomain
 
-
-
-
-
-
-
-
-
+  
 

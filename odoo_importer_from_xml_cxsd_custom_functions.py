@@ -41,3 +41,31 @@ def getFormDateTime():
 def convertDateTimeFromEpochDateTime(datetime_from_epoch_ms):
 	return datetime.fromtimestamp(int(datetime_from_epoch_ms)/1000, timezone.utc)
 
+#Config of Custom Schemas based on prefix of file (5Chars)
+def getSchemaFilenameForPrefix(prefix):
+
+	if prefix in ["COR9_"]:
+	  return 'COR09.cxsd'
+
+	if prefix in ["COR16"]:
+	  return 'COR16.cxsd'
+
+	if prefix in ["COR17", "COR18", "COR19", "COR20", "COR21", "COR22"]:
+	  return 'COR20.cxsd'
+
+	if prefix in ["COR23"]:
+	  return 'COR23.cxsd'
+
+	if prefix in ["COR24"]:
+	  return 'COR24.cxsd'
+
+	if prefix in ["COR25"]:
+	  return 'COR25.cxsd'
+
+	if prefix in ["COR27"]:
+	  return 'COR27.cxsd'
+
+	if prefix in ["COR28", "COR29", "COR30"]:
+	  return 'COR27.cxsd'
+
+	return "COR27" #default

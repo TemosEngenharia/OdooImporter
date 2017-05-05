@@ -199,8 +199,10 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
 				if config.main_id is None:
 					config.main_id = -1
+					status = False
+				else:
+					status = True
 				
-				status = True
 				#exit()
 
 			#Special childClass for multiple inserts in relationshop to main
@@ -234,17 +236,18 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
 					sqlInsertOutput = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList)
 					
-					#Print out SQL That will be run on cursor
-					#print("SQL Child:" + sqlInsertOutput)
-
 					#Run INSERT ON SQL POSTGREE
 					child_id = dbtools.insertInToDB(sqlInsertOutput)
 
+					if child_id is None:
+						child_id = -1
+						status = False
+					else:
+						status = True
 					#Print Inserted ID
 					print("\n  *>>indexRow:[" + str(i) + "] Inserted Child ID:[" + str(child_id) + "]")
 
 					#exit()
-					status = True
 
 	
 
@@ -456,8 +459,12 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
 	if nodeType in ["simple"]:
 		print("indexRow["+str(indexRow)+"]"+field['nodePath'])
-		#Get value for this field on xml
-		outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+		try:
+			#Get value for this field on xml
+			outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+
+		except Exception as e:
+			outputValue = "NONE"			
 
 	#Deal with custom fields with has not value on xml
 	elif nodeType in ["extraField"]:
@@ -474,11 +481,27 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 				outputValue = 'ERR:' + getValueOf
 		else:
 
-			outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+			try:
+				#Get value for this field on xml
+				outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+
+			except Exception as e:
+				outputValue = "NONE"
 
 	else:
-		outputValue = "XXX  hold on!  XXX"
+		try:
+			#Get value for this field on xml
+			outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
 
+		except Exception as e:
+			outputValue = "NODE UNDEFINED:" + nodePath
+
+	#Removing apostrophe avoiding SQL syntax error 
+	if isinstance(outputValue, str):
+		outputValue=str(outputValue).translate(str.maketrans({"'":None}))
+
+	print(outputValue)
+	
 	return outputValue
 
 						
@@ -542,9 +565,9 @@ def main():
 	# RUNNING
 
 
-	file_prefix = 'COR20'
+	file_prefix = 'COR'
 	
-	config.inputXMLPath = "../OdooImporterData/corretiva_v20/2_QUEUE/" + file_prefix + "/"
+	config.inputXMLPath = "../OdooImporterData/corretiva/xml/QUEUE/" # + file_prefix + "/"
 	#inputXMLFileName = "corretiva_v20_20170110-121749.xml"
 	#inputXMLFileName = "COR16_1.xml"
 	#inputXMLFileName = "COR16_2.xml"
@@ -572,10 +595,11 @@ def main():
 #	exit()
 
 	print("\n____________________\n")
+	
 	counter = 0
 
 	for filename in files:
-		if filename[:5]==file_prefix: 
+		if filename[:len(file_prefix)]==file_prefix:  
 			counter=counter+1
 			
 	print(file_prefix + " to process:"+str(counter))
@@ -583,20 +607,31 @@ def main():
 
 
 	print("\n____________________\n")
+
 	#Process all
 	for filename in files:
 		if filename[:len(file_prefix)]==file_prefix: 
 			print("> > > >"+ filename)
 
 			try:
+
 				config.inputXMLFileName = filename
 				config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
 				
-				print(config.inputXMLFile)
-				print("> > > Processing:" + cfuncs.getXMLFilename())
+				#print(config.inputXMLFile)
+				print("> > > Processing XML Doc:" + cfuncs.getXMLFilename())
+
+				xmldoc_Parsed_Root = config.etree.parse(config.inputXMLFile).getroot()
+
+
+				#Schema chooser
+				config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
+				config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
+				
+				
+				print("> > > Processing With Custom Schema:" + config.inputCXSDFile)
 
 				schema_Parsed_Root = config.etree.parse(config.inputCXSDFile).getroot()
-				xmldoc_Parsed_Root = config.etree.parse(config.inputXMLFile).getroot()
 
 				#Custom Vars for Custom Functions
 				config.formDateTime=xmldoc_Parsed_Root.xpath('/Entry/EntryDateFromEpoch')[0].text
@@ -609,13 +644,14 @@ def main():
 			except Exception as e:
 				#raise e
 				print("Error:" + config.inputXMLFile + "\n" + str(e))
-				print(config.inputXMLPath + "-" + config.inputXMLFileName)
 
-				rename(config.inputXMLFile, config.inputXMLPath + "-" + config.inputXMLFileName)
 				status = False
-				pass
-	
-		
+			
+
+			if status==True:
+				rename(config.inputXMLFile, config.inputXMLPath + "OK/" + config.inputXMLFileName)	
+			#if status==False:
+				#rename(config.inputXMLFile, config.inputXMLPath + "ERRORS/" + config.inputXMLFileName)	
 
 
 

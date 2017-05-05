@@ -12,7 +12,7 @@
 
 import datetime
 import odoo_importer_from_xml_cxsd_config as config 
-#import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
+import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
 
 
 def odooGenerateOrmFromCXSD(schema_Parsed_Root):
@@ -237,6 +237,13 @@ def main():
 
 
 	# RUNNING
+	#Schema chooser
+	filename = "COR24"
+	config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
+	config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
+
+
+	print("> > > Processing With Custom Schema:" + config.inputCXSDFile)
 
 	#Generate using Schema CXSD
 	status, outputText = odooGenerateOrmFromCXSD(config.etree.parse(config.inputCXSDFile).getroot())
