@@ -625,6 +625,7 @@ def main():
 
 
 				#Schema chooser
+				config.inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
 				config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
 				config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 				
@@ -647,11 +648,13 @@ def main():
 
 				status = False
 			
-
+			#move file to OK Subfolder
 			if status==True:
-				rename(config.inputXMLFile, config.inputXMLPath + "OK/" + config.inputXMLFileName)	
-			#if status==False:
-				#rename(config.inputXMLFile, config.inputXMLPath + "ERRORS/" + config.inputXMLFileName)	
+				rename(config.inputXMLFile, config.inputXMLPath + "OK/" + config.inputXMLFileName)
+
+			#move file to ERRORS Subfolder
+			if status==False:
+				rename(config.inputXMLFile, config.inputXMLPath + "ERRORS/" + config.inputXMLFileName)	
 
 
 

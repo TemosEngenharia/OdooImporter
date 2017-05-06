@@ -1,5 +1,6 @@
 
 #
+# ATT 2017-05-05 v.v10.0.56 - setting creation using COR27.cxsd
 # ATT 2017-05-02 v.v10.0.51 - new child class and relationship
 # ATT 2017-04-26 v.v10.0.50 - Added new type of Class (mainClass and childClass)
 # ATT 2017-04-26 v.v10.0.49
@@ -238,18 +239,20 @@ def main():
 
 	# RUNNING
 	#Schema chooser
-	filename = "COR24"
+	filename = "COR27"
+
+	config.inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
 	config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
 	config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 
-
-	print("> > > Processing With Custom Schema:" + config.inputCXSDFile)
+	print("> > > Creating by Custom Schema:" + config.inputCXSDFile)
 
 	#Generate using Schema CXSD
 	status, outputText = odooGenerateOrmFromCXSD(config.etree.parse(config.inputCXSDFile).getroot())
 
 	#Save on file model.py for odoo
-	writeOut(outputText,config.outputORMFile)
+	#developer usage
+	#writeOut(outputText,config.outputORMFile)
 
 	#Save in Data Domain
 	writeOut(outputText,config.outputORMFile_InDataDomain)

@@ -45,23 +45,13 @@ def init(arg):
   global inputXMLPath, inputXMLFileName, inputXMLFile
   global inputCXSDPath, inputCXSDFileName, inputCXSDFile
 
-  inputXMLPath = "../OdooImporterData/corretiva_v20/xml/" 
-  inputXMLFileName = "corretiva_v20_20170110-121749.xml"
-  #inputXMLFileName = "COR16_1.xml"
-  #inputXMLFileName = "COR16_2.xml"
-  #inputXMLFileName = "COR19_1.xml"
-  #inputXMLFileName = "COR20_1.xml"
-  #inputXMLFileName = "COR20_2.xml"
-  #inputXMLFileName = "COR20_3.xml"
-  #inputXMLFileName = "COR20_4.xml"
-  #inputXMLFileName = "COR20_5.xml" #faltava um field Checkout PA
+  #inputXMLPath = "../OdooImporterData/corretiva_v20/xml/" 
+  #inputXMLFileName = "corretiva_v20_20170110-121749.xml"
+  #inputXMLFile = inputXMLPath + inputXMLFileName
 
-  
-  inputXMLFile = inputXMLPath + inputXMLFileName
-
-  inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
-  inputCXSDFileName = "COR20.cxsd"
-  inputCXSDFile = inputCXSDPath + inputCXSDFileName
+  #inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
+  #inputCXSDFileName = "COR20.cxsd"
+  #inputCXSDFile = inputCXSDPath + inputCXSDFileName
 
   #custom global var
   global main_id
