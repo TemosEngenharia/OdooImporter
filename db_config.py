@@ -1,9 +1,14 @@
 # ATT 2017-05-03 v10.0.52 - New odoo Config Function
 #!/usr/bin/python
+#Logging Required Imports
+import logging_config as lc
+import logging
+
 from configparser import ConfigParser
  
  
 def db_config(filename='db_config.ini', section='postgresql'):
+    logger = logging.getLogger(__name__)
     # create a parser
     parser = ConfigParser()
     # read config file
@@ -22,6 +27,7 @@ def db_config(filename='db_config.ini', section='postgresql'):
 
 
 def odoo_config(filename='db_config.ini', section='odoo'):
+    logger = logging.getLogger(__name__)
     # create a parser
     parser = ConfigParser()
     # read config file

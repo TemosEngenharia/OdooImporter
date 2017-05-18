@@ -7,6 +7,10 @@
 #
 # SETTINGS
 #
+#Logging Required Imports
+import logging_config as lc
+import logging
+
 from db_config import odoo_config
 
 
@@ -37,6 +41,7 @@ except ImportError:
           print("Failed to import ElementTree from any known place")
 
 def init(arg):
+  logger = logging.getLogger(__name__)
 	
   global settings
   settings = []
@@ -61,7 +66,7 @@ def init(arg):
   odooConfigDict = odoo_config() #comes from db_tools + db_config.ini
 
   global outputORMPath, outputORMFileName, outputORMFile
-  outputORMPath = "/Users/andersontagata/TemosEngenharia/custom-addons/corretiva/models/"
+  outputORMPath = "../../odoo-dev/custom-addons/corretiva/models/"
   outputORMFileName = "corretiva_model.py"
   outputORMFile = outputORMPath + outputORMFileName
 

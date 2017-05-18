@@ -18,208 +18,208 @@ import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
 
 def odooGenerateOrmFromCXSD(schema_Parsed_Root):
 
-	status = False
-	
-	pyIdent = "    "
+    status = False
+    
+    pyIdent = "    "
 
-	#Write Output Odoo Structure
-	output = '# -*- coding: utf-8 -*-\n# ATT Generated at {0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
-	output = output + "\n\nfrom odoo import models, fields, api\n"
+    #Write Output Odoo Structure
+    output = '# -*- coding: utf-8 -*-\n# ATT Generated at {0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
+    output = output + "\n\nfrom odoo import models, fields, api\n"
 
-	xml = schema_Parsed_Root
-	
-	schema_Parsed_Root = None #saving memory
+    xml = schema_Parsed_Root
+    
+    schema_Parsed_Root = None #saving memory
 
-	modelsClasses = []
-	modelFields = []
+    modelsClasses = []
+    modelFields = []
 
-	#List of Ordered Required Attributes (Order/Case Sensitive) 
-	#  All Nodes must to have those attributes
-	#  Nodes without attributes will be ignored
-	commonNodeAttributes = ["nodeType", "nodePath", "odooClass", "odooField", "odooDT"]
+    #List of Ordered Required Attributes (Order/Case Sensitive) 
+    #  All Nodes must to have those attributes
+    #  Nodes without attributes will be ignored
+    commonNodeAttributes = ["nodeType", "nodePath", "odooClass", "odooField", "odooDT"]
 
-	allowedNodeTypes = ["mainClass", "childClass", "simple", "complex", "multipleField", 
-						"complexFieldIdValue", "complexFieldIdRows", "extraField", 
-						"relationship", "mainFields", "childField", "childFieldData"
-						]
+    allowedNodeTypes = ["mainClass", "childClass", "simple", "complex", "multipleField", 
+                        "complexFieldIdValue", "complexFieldIdRows", "extraField", 
+                        "relationship", "mainFields", "childField", "childFieldData"
+                        ]
 
-	#Load XML Schema
+    #Load XML Schema
 
-	#Iter Schema
-	for element in xml.iter():
+    #Iter Schema
+    for element in xml.iter():
 
-		# Has Attributes?
-		if len(element.attrib) > 0:
-	
-			#Only care about allowed nodeTypes
-			if element.get('nodeType') in allowedNodeTypes:
+        # Has Attributes?
+        if len(element.attrib) > 0:
+    
+            #Only care about allowed nodeTypes
+            if element.get('nodeType') in allowedNodeTypes:
 
-				#Getting Node Attributes Values
-				elementAttribValues = [
-					element.get('nodeType'),
-					element.get('nodePath'),
-					element.get('odooClass'),
-					element.get('odooField'),
-					element.get('odooDT')
-					]
-					
-				#Zip method, which combines two iterables and make it dictionary
-				elementAttribDict = dict(zip(commonNodeAttributes, elementAttribValues)) 
-
-
-				#Simple Classes List
-				if element.get('nodeType') in ["mainClass", "childClass"]:
-
-					#Get Commom Attributes
-					nodesAttributes = list(commonNodeAttributes)
-					
-					#Add Specific Nodes
-					nodesAttributes.append("odooRecName")
-					nodesAttributes.append("odooSQLConstraints")
-
-					#Getting Node Attributes Values
-					elementAttribValues = [
-						element.get('nodeType'),
-						element.get('nodePath'),
-						element.get('odooClass'),
-						element.get('odooField'),
-						element.get('odooDT'),
-						element.get('odooRecName'),
-						element.get('odooSQLConstraints')
-					]
-					
-					#Zip method, which combines two iterables and make it dictionary
-					elementAttribDict = dict(zip(nodesAttributes, elementAttribValues)) 
-					
-					#Keep on memory
-					modelsClasses.append(elementAttribDict)
-				
-				elif element.get('nodeType') == "simple":
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') == "complex":
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') == "multipleField":
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') in ["mainFields", "childField", "childFieldData"]:
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') == "complexFieldIdValue":
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') == "complexFieldIdRows":
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') == "extraField":
-				
-					modelFields.append(elementAttribDict)
-
-				elif element.get('nodeType') == "relationship":
-				
-					modelFields.append(elementAttribDict)
-
-				elementAttribValues.clear #Saving Memory
-					
-		element.clear #Saving Memory
+                #Getting Node Attributes Values
+                elementAttribValues = [
+                    element.get('nodeType'),
+                    element.get('nodePath'),
+                    element.get('odooClass'),
+                    element.get('odooField'),
+                    element.get('odooDT')
+                    ]
+                    
+                #Zip method, which combines two iterables and make it dictionary
+                elementAttribDict = dict(zip(commonNodeAttributes, elementAttribValues)) 
 
 
+                #Simple Classes List
+                if element.get('nodeType') in ["mainClass", "childClass"]:
 
-	#Only create valid classes models
-	if len(modelsClasses)>0:
+                    #Get Commom Attributes
+                    nodesAttributes = list(commonNodeAttributes)
+                    
+                    #Add Specific Nodes
+                    nodesAttributes.append("odooRecName")
+                    nodesAttributes.append("odooSQLConstraints")
 
-		#Looping Classes to generate
-		for i in range(len(modelsClasses)):
-			
-			#Model Class Name
-			modelClassName = modelsClasses[i]['odooClass']
-			
-			#rec_name
-			modelClassRecName = modelsClasses[i]['odooRecName']
+                    #Getting Node Attributes Values
+                    elementAttribValues = [
+                        element.get('nodeType'),
+                        element.get('nodePath'),
+                        element.get('odooClass'),
+                        element.get('odooField'),
+                        element.get('odooDT'),
+                        element.get('odooRecName'),
+                        element.get('odooSQLConstraints')
+                    ]
+                    
+                    #Zip method, which combines two iterables and make it dictionary
+                    elementAttribDict = dict(zip(nodesAttributes, elementAttribValues)) 
+                    
+                    #Keep on memory
+                    modelsClasses.append(elementAttribDict)
+                
+                elif element.get('nodeType') == "simple":
+                
+                    modelFields.append(elementAttribDict)
 
-			#sql_constraints
-			modelClassSQLConstraints = modelsClasses[i]['odooSQLConstraints']
+                elif element.get('nodeType') == "complex":
+                
+                    modelFields.append(elementAttribDict)
 
-			#Write Odoo Class Name
-			output = "{}\nclass {}(models.Model):\n".format(output, modelClassName)
+                elif element.get('nodeType') == "multipleField":
+                
+                    modelFields.append(elementAttribDict)
 
-			#Write Odoo Default Name Field
-			output = "\n{}{}{} = '{}'\n".format(
-												output, 
-												pyIdent, 
-												modelsClasses[i]['odooField'], 
-												modelsClasses[i]['odooDT']
-												)
-			if not modelClassRecName == "":
-				#Write Odoo Rec Name Field
-				output = "{}{}_rec_name = '{}'\n".format(
-													output,
-													pyIdent,
-													modelClassRecName
-													)
+                elif element.get('nodeType') in ["mainFields", "childField", "childFieldData"]:
+                
+                    modelFields.append(elementAttribDict)
 
-			if not modelClassSQLConstraints == "":
-				#Write Odoo Constraints Definition
-				output = "{}{}_sql_constraints = {}\n".format(
-													output,
-													pyIdent,
-													modelClassSQLConstraints
-													)
-			#line for beautify
-			output = output + "\n"
+                elif element.get('nodeType') == "complexFieldIdValue":
+                
+                    modelFields.append(elementAttribDict)
+
+                elif element.get('nodeType') == "complexFieldIdRows":
+                
+                    modelFields.append(elementAttribDict)
+
+                elif element.get('nodeType') == "extraField":
+                
+                    modelFields.append(elementAttribDict)
+
+                elif element.get('nodeType') == "relationship":
+                
+                    modelFields.append(elementAttribDict)
+
+                elementAttribValues.clear #Saving Memory
+                    
+        element.clear #Saving Memory
+
+
+
+    #Only create valid classes models
+    if len(modelsClasses)>0:
+
+        #Looping Classes to generate
+        for i in range(len(modelsClasses)):
+            
+            #Model Class Name
+            modelClassName = modelsClasses[i]['odooClass']
+            
+            #rec_name
+            modelClassRecName = modelsClasses[i]['odooRecName']
+
+            #sql_constraints
+            modelClassSQLConstraints = modelsClasses[i]['odooSQLConstraints']
+
+            #Write Odoo Class Name
+            output = "{}\nclass {}(models.Model):\n".format(output, modelClassName)
+
+            #Write Odoo Default Name Field
+            output = "\n{}{}{} = '{}'\n".format(
+                                                output, 
+                                                pyIdent, 
+                                                modelsClasses[i]['odooField'], 
+                                                modelsClasses[i]['odooDT']
+                                                )
+            if not modelClassRecName == "":
+                #Write Odoo Rec Name Field
+                output = "{}{}_rec_name = '{}'\n".format(
+                                                    output,
+                                                    pyIdent,
+                                                    modelClassRecName
+                                                    )
+
+            if not modelClassSQLConstraints == "":
+                #Write Odoo Constraints Definition
+                output = "{}{}_sql_constraints = {}\n".format(
+                                                    output,
+                                                    pyIdent,
+                                                    modelClassSQLConstraints
+                                                    )
+            #line for beautify
+            output = output + "\n"
 
 # TENTATIVA DE REMOVE ITEM DA LISTA APOS USO, MAS DA ERRO DE LIST INDEX OUT OF RANGE
-# TALVEZ FAZER UMA LISTA DE USADOS E DEPOIS MANDAR EXCLUIR QUANDO SAIR DO FOR			
-#			#Fields Loop
-#			for f in range(len(modelFields)):
-#				#Keep only field where Class Name matches
-#				if modelFields[f]['odooClass']==modelClassName:	
-#					
-#					#Write Odoo Default Name Field
-#					output = '\n{}{}{} = "{}"\n'.format(
-#														output, 
-#														pyIdent, 
-#														modelFields[f]['odooField'], 
-#														modelFields[f]['odooDT']
-#														)
+# TALVEZ FAZER UMA LISTA DE USADOS E DEPOIS MANDAR EXCLUIR QUANDO SAIR DO FOR           
+#           #Fields Loop
+#           for f in range(len(modelFields)):
+#               #Keep only field where Class Name matches
+#               if modelFields[f]['odooClass']==modelClassName: 
+#                   
+#                   #Write Odoo Default Name Field
+#                   output = '\n{}{}{} = "{}"\n'.format(
+#                                                       output, 
+#                                                       pyIdent, 
+#                                                       modelFields[f]['odooField'], 
+#                                                       modelFields[f]['odooDT']
+#                                                       )
 #
-#					del modelFields[f-1]
+#                   del modelFields[f-1]
 
-			#Fields Loop
-			for field in modelFields:
+            #Fields Loop
+            for field in modelFields:
 
-				#Keep only field where Class Name matches
-				if field['odooClass'] == modelClassName:	
-					
-					#Only odoo fields and datatype defined
-					if not ((field['odooField'] == "") and (field['odooDT'] == "")):
+                #Keep only field where Class Name matches
+                if field['odooClass'] == modelClassName:    
+                    
+                    #Only odoo fields and datatype defined
+                    if not ((field['odooField'] == "") and (field['odooDT'] == "")):
 
-						#Write Odoo Default Name Field
-						output = '\n{}{}{} = {}\n'.format(
-															output, 
-															pyIdent, 
-															field['odooField'], 
-															field['odooDT']
-															)
-						#TENTATIVA NAO DEU CERTO TBM
-						#Remove Field Used for saving process and memory 
-						#modelFields.remove(field)
+                        #Write Odoo Default Name Field
+                        output = '\n{}{}{} = {}\n'.format(
+                                                            output, 
+                                                            pyIdent, 
+                                                            field['odooField'], 
+                                                            field['odooDT']
+                                                            )
+                        #TENTATIVA NAO DEU CERTO TBM
+                        #Remove Field Used for saving process and memory 
+                        #modelFields.remove(field)
 
-	status = True
+    status = True
 
-	return status, output.lstrip()
+    return status, output.lstrip()
 
 
 def writeOut(outputText, filename):
-	with open(filename,"w+") as f:
-		f.write(outputText)
+    with open(filename,"w+") as f:
+        f.write(outputText)
 
 def strip_one_space(s):
     if s.endswith(" "): s = s[:-1]
@@ -229,43 +229,43 @@ def strip_one_space(s):
 #---------------------------------------------------
 def main():
 
-	#Start Up Settings
-	config.init("dev_mode")
+    #Start Up Settings
+    config.init("dev_mode")
 
-	config.main_id = -1
+    config.main_id = -1
 
-	print(config.settings)
+    print(config.settings)
 
 
-	# RUNNING
-	#Schema chooser
-	filename = "COR27"
+    # RUNNING
+    #Schema chooser
+    filename = "COR27"
 
-	config.inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
-	config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
-	config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
+    config.inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
+    config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
+    config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 
-	print("> > > Creating by Custom Schema:" + config.inputCXSDFile)
+    print("> > > Creating by Custom Schema:" + config.inputCXSDFile)
 
-	#Generate using Schema CXSD
-	status, outputText = odooGenerateOrmFromCXSD(config.etree.parse(config.inputCXSDFile).getroot())
+    #Generate using Schema CXSD
+    status, outputText = odooGenerateOrmFromCXSD(config.etree.parse(config.inputCXSDFile).getroot())
 
-	#Save on file model.py for odoo
-	#developer usage
-	#writeOut(outputText,config.outputORMFile)
+    #Save on file model.py for odoo
+    #developer usage
+    #writeOut(outputText,config.outputORMFile)
 
-	#Save in Data Domain
-	writeOut(outputText,config.outputORMFile_InDataDomain)
+    #Save in Data Domain
+    writeOut(outputText,config.outputORMFile_InDataDomain)
 
-	#Show result on prompt
-	print(outputText)
-	print("\n#EOF status:" + str(status))
+    #Show result on prompt
+    print(outputText)
+    print("\n#EOF status:" + str(status))
 
 
 
 #---------------------------------------------------
 if __name__ == "__main__":
-	main()
+    main()
 
 
 
