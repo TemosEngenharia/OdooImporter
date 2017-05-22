@@ -1,5 +1,7 @@
-
+#!/usr/bin/env python
+# -*- coding uft-8 -*-
 #
+# ATT 2017-05-22 v10.0.60 - Added Support for field.Datetime()
 # ATT 2017-05-18 v10.0.59 - Added Logging resouce / Converting of Tab to Space Identation.
 # ATT 2017-05-02 v10.0.53 - Record special fields on postgresql (create and write (date and uid)) + Force Content for Add Rem childs
 # ATT 2017-05-02 v10.0.52 - New odoo Functions / Insert of Main and Childs working fine / Delete before Add repeated file
@@ -543,6 +545,9 @@ def getFormattedSQLValue(format, value):
 
     elif format.startswith("fields.Integer("):
         return value
+
+    elif format.startswith("fields.Datetime("):
+        return "'{}'".format(value)
 
     elif format.startswith("fields.Binary("):
         return "'{}'".format(value)

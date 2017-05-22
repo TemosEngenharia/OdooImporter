@@ -1,5 +1,7 @@
-
+#!/usr/bin/env python
+# -*- coding uft-8 -*-
 #
+# ATT 2017-05-22 v.v10.0.57 - first line added to allow execute without python pre-command on prompt
 # ATT 2017-05-05 v.v10.0.56 - setting creation using COR27.cxsd
 # ATT 2017-05-02 v.v10.0.51 - new child class and relationship
 # ATT 2017-04-26 v.v10.0.50 - Added new type of Class (mainClass and childClass)
