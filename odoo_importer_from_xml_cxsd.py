@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding uft-8 -*-
 #
+# ATT 2017-05-24 v10.0.61 - Added Support for field.Binary() with Encode
 # ATT 2017-05-22 v10.0.60 - Added Support for field.Datetime()
 # ATT 2017-05-18 v10.0.59 - Added Logging resouce / Converting of Tab to Space Identation.
 # ATT 2017-05-02 v10.0.53 - Record special fields on postgresql (create and write (date and uid)) + Force Content for Add Rem childs
@@ -550,7 +551,7 @@ def getFormattedSQLValue(format, value):
         return "'{}'".format(value)
 
     elif format.startswith("fields.Binary("):
-        return "'{}'".format(value)
+        return "encode('{}', 'base64')".format(value)
 
     else:
         return value

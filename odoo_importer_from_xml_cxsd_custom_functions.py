@@ -83,4 +83,7 @@ def getSchemaFilenameForPrefix(prefix):
     if prefix in ["COR28", "COR29", "COR30"]:
       return 'COR27.cxsd'
 
+    if prefix in ["COR31"]:
+      return 'COR31.cxsd'
+
     return "COR27" #default
