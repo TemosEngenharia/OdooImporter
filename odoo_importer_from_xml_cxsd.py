@@ -551,7 +551,8 @@ def getFormattedSQLValue(format, value):
         return "'{}'".format(value)
 
     elif format.startswith("fields.Binary("):
-        return "encode('{}', 'base64')".format(value)
+        return "'{}'".format(value)
+        # return "decode('{}', 'base64')".format(value)
 
     else:
         return value
