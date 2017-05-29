@@ -241,9 +241,9 @@ def main():
 
     # RUNNING
     #Schema chooser
-    filename = "COR27"
+    filename = "MCO20"
 
-    config.inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
+    config.inputCXSDPath = "../OdooImporterData/mcorretiva/schemas/"
     config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
     config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 

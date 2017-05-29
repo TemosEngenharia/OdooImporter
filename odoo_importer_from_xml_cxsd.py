@@ -212,7 +212,7 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
                 #Print out SQL That will be run on cursor
                 #logger.info("SQL Main:" + sqlInsertOutput)
 
-                deleteBeforeInsert = "DELETE FROM " + tableClassName + " WHERE entry_xml_filename LIKE '" + config.inputXMLFileName + "';"
+                deleteBeforeInsert = "DELETE FROM " + tableClassName + " WHERE "+ config.sourceFilenameFieldName + " LIKE '" + config.inputXMLFileName + "';"
 
                 logger.info("Running:" + deleteBeforeInsert)
                 dbtools.deleteFromDB(deleteBeforeInsert)
@@ -490,13 +490,26 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
     #Only odoo fields and datatype defined
 
     if nodeType in ["simple"]:
+
+        #DETAIL EACH SIMPLE ITEM ON LOG
         logger.info("indexRow["+str(indexRow)+"]"+field['nodePath'])
+        
         try:
             #Get value for this field on xml
-            outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+
+            #Deal with [?] ocurrences
+            if nodePath.find('[?]')>0:
+                newNodePath = nodePath.replace('[?]', '[1]')
+            else:
+                newNodePath = nodePath
+
+            outputValue = xmlDoc.xpath(newNodePath)[indexRow].text
+
+            #outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
 
         except Exception as e:
-            outputValue = "NONE"            
+            logger.error(e)
+            outputValue = ""            
 
     #Deal with custom fields with has not value on xml
     elif nodeType in ["extraField"]:
@@ -510,7 +523,8 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
                  
             except AttributeError:
 
-                outputValue = 'ERR:' + getValueOf
+                logger.error('ERR:eval(' + getValueOf + ")")
+                outputValue = ""
         else:
 
             try:
@@ -518,7 +532,8 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
                 outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
 
             except Exception as e:
-                outputValue = "NONE"
+                logger.error(e)
+                outputValue = ""
 
     else:
         try:
@@ -526,13 +541,20 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
             outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
 
         except Exception as e:
-            outputValue = "NODE UNDEFINED:" + nodePath
+            logger.warn("NODE UNDEFINED:" + nodePath)
+            outputValue = ""
 
     #Removing apostrophe avoiding SQL syntax error 
     if isinstance(outputValue, str):
         outputValue=str(outputValue).translate(str.maketrans({"'":None}))
 
-    logger.info(outputValue)
+        #Remove outer spaces
+        outputValue=outputValue.strip()
+
+    logger.info(" [" + str(outputValue) + "]")
+    
+    if outputValue == "":
+        outputValue = "NULL"
     
     return outputValue
 
@@ -540,6 +562,9 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
 def getFormattedSQLValue(format, value):
     logger = logging.getLogger(__name__)
+
+    if value == "NULL":
+        return "NULL"
 
     if format.startswith("fields.Char("):
         return "'{}'".format(value)
@@ -608,9 +633,10 @@ def main():
     # RUNNING
 
 
-    file_prefix = 'COR'
-    
-    config.inputXMLPath = "../OdooImporterData/corretiva/xml/QUEUE/" # + file_prefix + "/"
+    file_prefix = 'MCO'
+    config.sourceFilenameFieldName = 'xml_source_filename'
+
+    config.inputXMLPath = "../OdooImporterData/mcorretiva/xml/QUEUE/" # + file_prefix + "/"
     #inputXMLFileName = "corretiva_v20_20170110-121749.xml"
     #inputXMLFileName = "COR16_1.xml"
     #inputXMLFileName = "COR16_2.xml"
@@ -656,8 +682,8 @@ def main():
         if filename[:len(file_prefix)]==file_prefix: 
             logger.info("> > > >"+ filename)
 
-            try:
-
+            #try:
+            if 0==0:
                 config.inputXMLFileName = filename
                 config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
                 
@@ -668,7 +694,7 @@ def main():
 
 
                 #Schema chooser
-                config.inputCXSDPath = "../OdooImporterData/corretiva/schemas/"
+                config.inputCXSDPath = "../OdooImporterData/mcorretiva/schemas/"
                 config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
                 config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
                 
@@ -684,7 +710,8 @@ def main():
 
                 logger.info("\n#EOF status:" + str(status))
 
-                
+            try:
+                ab=""
             except Exception as e:
                 #raise e
                 logger.error("Error:" + config.inputXMLFile + "\n" + str(e))
@@ -692,8 +719,8 @@ def main():
                 status = False
             
             #move file to OK Subfolder
-            if status==True:
-                rename(config.inputXMLFile, config.inputXMLPath + "OK/" + config.inputXMLFileName)
+            #if status==True:
+            #    rename(config.inputXMLFile, config.inputXMLPath + "OK/" + config.inputXMLFileName)
 
             #move file to ERRORS Subfolder
             #if status==False:
