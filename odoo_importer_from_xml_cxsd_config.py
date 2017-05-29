@@ -47,6 +47,7 @@ def init(arg):
   settings = []
   settings.append(arg)
 
+  global sourceFilenameFieldName
   global inputXMLPath, inputXMLFileName, inputXMLFile
   global inputCXSDPath, inputCXSDFileName, inputCXSDFile
 
@@ -66,13 +67,13 @@ def init(arg):
   odooConfigDict = odoo_config() #comes from db_tools + db_config.ini
 
   global outputORMPath, outputORMFileName, outputORMFile
-  outputORMPath = "../../odoo-dev/custom-addons/corretiva/models/"
-  outputORMFileName = "corretiva_model.py"
-  outputORMFile = outputORMPath + outputORMFileName
+  #outputORMPath = "../../odoo-dev/custom-addons/mcorretiva/models/"
+  #outputORMFileName = "mcorretiva_model.py"
+  #outputORMFile = outputORMPath + outputORMFileName
 
   global outputORMPath_InDataDomain, outputORMFileName_InDataDomain, outputORMFile_InDataDomain
-  outputORMPath_InDataDomain = "../OdooImporterData/corretiva/models/"
-  outputORMFileName_InDataDomain = "corretiva_model.py"
+  outputORMPath_InDataDomain = "../OdooImporterData/mcorretiva/models/"
+  outputORMFileName_InDataDomain = "mcorretiva_model.py"
   outputORMFile_InDataDomain = outputORMPath_InDataDomain + outputORMFileName_InDataDomain
 
   

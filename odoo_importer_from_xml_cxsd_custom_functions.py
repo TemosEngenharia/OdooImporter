@@ -56,6 +56,9 @@ def convertDateTimeFromEpochDateTime(datetime_from_epoch_ms):
 def getSchemaFilenameForPrefix(prefix):
     logger = logging.getLogger(__name__)
 
+    if prefix in ["MCO20"]:
+      return 'MCO20-dev.cxsd'
+
     if prefix in ["COR9_"]:
       return 'COR09.cxsd'
 
