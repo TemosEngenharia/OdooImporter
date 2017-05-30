@@ -521,7 +521,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
             try:
                 outputValue = eval(getValueOf)
-                logger.info("}}}"+outputValue)
+                
             except AttributeError:
 
                 logger.error('ERR:eval(' + getValueOf + ")")
