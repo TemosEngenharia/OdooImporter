@@ -35,6 +35,40 @@ def getCurrentDateTimeForSQL():
     logger = logging.getLogger(__name__)
     return time.strftime('%Y-%m-%d %H:%M:%S')
 
+def getSQLDateTimeFromJoinedStringInternational(joined_datetime_string):
+
+    if len(joined_datetime_string) == 12:
+
+        dt = datetime.strptime(joined_datetime_string, "%Y%m%d%H%M")
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+    elif len(joined_datetime_string) == 14:
+
+        dt = datetime.strptime(joined_datetime_string, "%Y%m%d%H%M%S")
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+    else:
+        return ""
+
+
+def getSQLDateTimeFromJoinedStringBrazilian(joined_datetime_string):
+    logger = logging.getLogger(__name__)
+
+    if len(joined_datetime_string) == 12:
+
+        dt = datetime.strptime(joined_datetime_string, "%d%m%Y%H%M")
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+    elif len(joined_datetime_string) == 14:
+
+        dt = datetime.strptime(joined_datetime_string, "%d%m%Y%H%M%S")
+        return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+    else:
+
+        return ""
+
+
 def getXMLFilename():
     logger = logging.getLogger(__name__)
     return config.inputXMLFileName

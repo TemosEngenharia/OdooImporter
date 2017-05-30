@@ -514,13 +514,14 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
     #Deal with custom fields with has not value on xml
     elif nodeType in ["extraField"]:
 
+
         if field['getValueOf'].find("(")>0:
             #Testing User Custom Functions and handling it on error case
             getValueOf = "cfuncs." + field['getValueOf']
 
             try:
                 outputValue = eval(getValueOf)
-                 
+                logger.info("}}}"+outputValue)
             except AttributeError:
 
                 logger.error('ERR:eval(' + getValueOf + ")")
@@ -528,8 +529,14 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
         else:
 
             try:
-                #Get value for this field on xml
-                outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+                #Deal with [?] ocurrences
+                if nodePath.find('[?]')>0:
+                    newNodePath = nodePath.replace('[?]', '[1]')
+                else:
+                    newNodePath = nodePath
+
+                outputValue = xmlDoc.xpath(newNodePath)[indexRow].text
+
 
             except Exception as e:
                 logger.error(e)
@@ -537,8 +544,14 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
     else:
         try:
-            #Get value for this field on xml
-            outputValue = xmlDoc.xpath(nodePath.replace('?', '1'))[indexRow].text
+            #Deal with [?] ocurrences
+            if nodePath.find('[?]')>0:
+                newNodePath = nodePath.replace('[?]', '[1]')
+            else:
+                newNodePath = nodePath
+
+            outputValue = xmlDoc.xpath(newNodePath)[indexRow].text
+
 
         except Exception as e:
             logger.warn("NODE UNDEFINED:" + nodePath)
@@ -576,8 +589,8 @@ def getFormattedSQLValue(format, value):
         return "'{}'".format(value)
 
     elif format.startswith("fields.Binary("):
+        #return "encode('{}', 'base64')".format(value)
         return "'{}'".format(value)
-        # return "decode('{}', 'base64')".format(value)
 
     else:
         return value
