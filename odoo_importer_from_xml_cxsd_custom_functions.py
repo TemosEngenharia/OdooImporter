@@ -68,6 +68,54 @@ def getSQLDateTimeFromJoinedStringBrazilian(joined_datetime_string):
 
         return ""
 
+def sec2time(sec, n_msec=3):
+    ''' Convert seconds to 'D days, HH:MM:SS.FFF' '''
+    if hasattr(sec,'__len__'):
+        return [sec2time(s) for s in sec]
+    m, s = divmod(sec, 60)
+    h, m = divmod(m, 60)
+    d, h = divmod(h, 24)
+    if n_msec > 0:
+        pattern = '%%02d:%%02d:%%0%d.%df' % (n_msec+3, n_msec)
+    else:
+        pattern = r'%02d:%02d:%02d'
+    if d == 0:
+        return pattern % (h, m, s)
+    return ('%d days, ' + pattern) % (d, h, m, s)
+
+
+#Returns delta time between two dates.
+def getDeltaTimeBrazilianDateTimeStrings(old_date_time_joined_string, new_date_time_joined_string):
+    logger = logging.getLogger(__name__)
+
+    dateTimeStringOld = getSQLDateTimeFromJoinedStringBrazilian(old_date_time_joined_string)
+    dateTimeStringNew = getSQLDateTimeFromJoinedStringBrazilian(new_date_time_joined_string)
+    
+    #logger.info(dateTimeStringOld)
+    #logger.info(dateTimeStringNew)
+    
+    dateTimeOld = datetime.strptime(dateTimeStringOld, '%Y-%m-%d %H:%M:%S')
+    dateTimeNew = datetime.strptime(dateTimeStringNew, '%Y-%m-%d %H:%M:%S')
+  
+    logger.info(dateTimeOld)
+    logger.info(dateTimeNew)
+  
+    logger.info(dateTimeNew-dateTimeOld)
+
+    if dateTimeNew>dateTimeOld:
+
+        elapsedTime = dateTimeNew-dateTimeOld
+
+        d =  divmod(elapsedTime.total_seconds(), 86400) #days
+        h = divmod(d[1],3600)  # hours
+        m = divmod(h[1],60)  # minutes
+        s = m[1]  # seconds
+
+        return '%d dias, %d horas, %d minutos e %d segundos' % (d[0],h[0],m[0],s)
+
+    else:
+        return ""
+
 
 def getXMLFilename():
     logger = logging.getLogger(__name__)

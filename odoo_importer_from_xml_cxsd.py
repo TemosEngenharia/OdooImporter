@@ -521,7 +521,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
             try:
                 outputValue = eval(getValueOf)
-                
+
             except AttributeError:
 
                 logger.error('ERR:eval(' + getValueOf + ")")
@@ -696,8 +696,8 @@ def main():
         if filename[:len(file_prefix)]==file_prefix: 
             logger.info("> > > >"+ filename)
 
-            #try:
-            if 0==0:
+            try:
+            #if 0==0:
                 config.inputXMLFileName = filename
                 config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
                 
@@ -724,8 +724,8 @@ def main():
 
                 logger.info("\n#EOF status:" + str(status))
 
-            try:
-                ab=""
+            #try:
+            #    ab=""
             except Exception as e:
                 #raise e
                 logger.error("Error:" + config.inputXMLFile + "\n" + str(e))
