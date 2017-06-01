@@ -7,7 +7,7 @@ import logging
 from configparser import ConfigParser
  
  
-def db_config(filename='db_config.ini', section='postgresql'):
+def db_config(filename='/etc/odoo-dev/db_config.ini', section='postgresql'):
     logger = logging.getLogger(__name__)
     # create a parser
     parser = ConfigParser()
@@ -26,7 +26,7 @@ def db_config(filename='db_config.ini', section='postgresql'):
     return db
 
 
-def odoo_config(filename='db_config.ini', section='odoo'):
+def odoo_config(filename='/etc/odoo-dev/db_config.ini', section='odoo'):
     logger = logging.getLogger(__name__)
     # create a parser
     parser = ConfigParser()
