@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<Entry nodePath="/Entry" nodeType="complex" odooClass="MCorretivaForm" odooDT="" odooField="">
+
+    <!--DEFINICAO DOS MODELS-->
+    <Models>
+        <Model  nodePath="Entry/Models/Model" 
+                nodeType="mainClass" 
+                odooClass="MCorretivaForm" 
+                odooDT="mcorretiva.mco_form" 
+                odooField="_name" 
+                odooRecName="mco_task_request_number" 
+                odooSQLConstraints="[('mcorretiva.mco_form', 'unique (xml_source_filename)', 'XML já foi importado anteriormente!')]">     
+        </Model>
+        
+        <Model  nodePath="/Entry/Files/File" 
+                nodeType="childClass" 
+                odooClass="MCorretivaFormFiles" 
+                odooDT="mcorretiva.mco_form_files" 
+                odooField="_name" 
+                odooRecName="id" 
+                odooSQLConstraints="">  
+        </Model>
+
+        <Model  nodePath="/Entry/Form/Fields/Field[Id='EquipList']/Rows/Row" 
+                nodeType="childClass" 
+                odooClass="MCorretivaFormEquipments" 
+                odooDT="mcorretiva.mco_form_equipments" 
+                odooField="_name" 
+                odooRecName="mco_form_equip_name" 
+                odooSQLConstraints="">  
+        </Model>
+
+    </Models>
+
+    <!--ADICIONANDO CAMPOS EXTRAS-->
+    <ExtraFields>
+
+        <!--Data e hora do formulário-->
+        <ExtraField     nodePath="/Entry/EntryDate" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Datetime(string=u'Data do Formulário')" 
+                        odooField="mco_form_date_time"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+        <ExtraField     nodePath="/Entry/Form/Name" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'XML importado!!!', default='')" 
+                        odooField="xml_source_filename"
+                        getValueOf="getXMLFilename()">
+                Nome do XML importado(Usado na constraint para evitar duplicidade)
+        </ExtraField>
+
+        <!--Data e hora da entrada 33-->
+        <ExtraField     nodePath="/Entry/EntryLocation/Date" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Datetime(string=u'Data da Localização')" 
+                        odooField="mco_location_date"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+        <!--Data e hora Horário da ligação de Check-in-->
+        <ExtraField     nodePath="/Entry/Form/Fields/Field[Id='TimeCheckIn']/Value" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Datetime(string=u'Horário da ligação de Check-in')"
+                        odooField="mco_form_checkin_call_datetime"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+
+        <!--Data e hora Horário da ligação de Check-out-->
+        <ExtraField     nodePath="/Entry/Form/Fields/Field[Id='TimeCheckOut']/Value" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Datetime(string=u'Horário da ligação de Check-out')"
+                        odooField="mco_form_checkout_call_datetime"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+
+        <!--Data e hora External Creation Início SLA-->
+        <ExtraField     nodePath="/Entry/Task/ExternalCreationDate" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Datetime(string=u'Início SLA')" 
+                        odooField="mco_task_external_creation_date"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+
+        <!--Dif between 33 and SLA-->
+        <ExtraField     nodePath="/Entry/EntryLocation/Date" 
+                        nodeType="extraField" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Tempo Delta da SLA')" 
+                        odooField="mco_delta_sla"
+                        getValueOf="getDeltaTimeBrazilianDateTimeStrings(xmlDoc.xpath('/Entry/Task/ExternalCreationDate')[0].text,xmlDoc.xpath('/Entry/EntryLocation/Date')[0].text)">
+                d:h:m:s
+        </ExtraField>
+
+    </ExtraFields>
+
+
+    <EntryType>33</EntryType>
+
+    <!--Data e Hora do Envio do E-mail do OfficeTrack-->
+    <EventDate>24052017122130</EventDate>
+    <EventDateAge>-1</EventDateAge>
+     <!--Data e Hora do Envio do E-mail do OfficeTrack em ms desde 1970/1/1-->
+    <EventDateFromEpoch>1495639290000</EventDateFromEpoch>
+    <!--Tipo de entrada do Documento-->
+    <EntryType>33</EntryType>
+    <!--Identificador único de entradas-->
+    <EntryGuid>7890ffb2-a676-4bd0-ab68-402328ef9127</EntryGuid>
+    <!--Data e Hora do envio ao OfficeTrack da entrada 33-->
+    <EntryDate>24052017121951</EntryDate>
+    <EntryDateAge>-101</EntryDateAge>
+    <!--Data e Hora do envio ao OfficeTrack da entrada 33 em ms desde 1970/1/1-->
+    <EntryDateFromEpoch nodePath="/Entry/EntryDateFromEpoch" 
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Data Epoch da Entrada')" 
+                        odooField="mco_date_from_epoch">
+                        1484057895000
+    </EntryDateFromEpoch>
+
+
+
+
+    <!--Origem da entrada dos dados-->
+    <EntrySource>4</EntrySource>
+
+
+    <!--Localização de onde o colaborador enviou a entrada-->
+    <EntryLocation  nodePath="/Entry/EntryLocation" 
+                    nodeType="complex" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+        <!--POI ou Endereço de onde foi feita a entrada-->
+        <Address    nodePath="/Entry/EntryLocation/Address" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'Endereço')" 
+                    odooField="mco_location_address">
+                    Posto Shell Bordo
+        </Address>
+
+        <!--Longitude do local-->
+        <X  nodePath="/Entry/EntryLocation/X" 
+            nodeType="simple" 
+            odooClass="MCorretivaForm" 
+            odooDT="fields.Char(string=u'longitude')" 
+            odooField="mco_location_x">
+            -46.7323303222656
+        </X>
+
+        <!--Latitude do local-->
+        <Y  nodePath="/Entry/EntryLocation/Y" 
+            nodeType="simple" 
+            odooClass="MCorretivaForm" 
+            odooDT="fields.Char(string=u'latitude')" 
+            odooField="mco_location_y">
+            -23.5872573852539
+        </Y>
+
+        <!--Número do aparelho utilizado para envio da entrada-->
+        <MSISDN>+5515997536971</MSISDN>
+        
+        <!--Data e hora da entrada 33-->
+        <Date>
+                10012017121749
+        </Date>
+        
+        <DateAge>-56</DateAge>
+        
+        <DateFromEpoch  nodePath="/Entry/EntryLocation/DateFromEpoch" 
+                        nodeType="simple" odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Data Formulário')" 
+                        odooField="mco_location_date_from_epoch">
+                        1484057869000
+        </DateFromEpoch>
+
+    </EntryLocation>
+    
+
+    <!--NAO IMPORTADO NO MOMENTO-->
+    <PreviousRelatedEntries>
+        <Entry>
+            <EntryType>25</EntryType>
+            <EntryDate>24052017163424</EntryDate>
+            <EntryDateAge>-546</EntryDateAge>
+            <EntryDateFromEpoch>1495654464000</EntryDateFromEpoch>
+        </Entry>
+        <Entry>
+            <EntryType>23</EntryType>
+            <EntryDate>24052017164213</EntryDate>
+            <EntryDateAge>-77</EntryDateAge>
+            <EntryDateFromEpoch>1495654933000</EntryDateFromEpoch>
+            <Form>
+                <Name>Manutenção Corretiva</Name>
+                <Version>20</Version>
+                <Fields>
+                    <Field>
+                        <Id>Horário da ligação de Check-in</Id>
+                        <Value>240520171639</Value>
+                    </Field>
+                    <Field>
+                        <Id>Duração da ligação Check-in?</Id>
+                        <Value>5</Value>
+                    </Field>
+                    <Field>
+                        <Id>Atendente que realizou o Check-in na PA</Id>
+                        <Value>Bruno</Value>
+                    </Field>
+                    <Field>
+                        <Id>Nome do responsável pelo Posto</Id>
+                        <Value>A</Value>
+                    </Field>
+                    <Field>
+                        <Id>E-mail do posto</Id>
+                        <Value>b</Value>
+                    </Field>
+                    <Field>
+                        <Id>PistaP</Id>
+                        <Value>1</Value>
+                        <Text>Sim</Text>
+                    </Field>
+                    <Field>
+                        <Id>Atividades Realizadas na Pista Principal</Id>
+                        <Value>temos</Value>
+                    </Field>
+                    <Field>
+                        <Id>PistaSec</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Serv</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Teto</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Equip</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Problema encontrado no Local</Id>
+                        <Value>hdhsjsjssb shsushshhsue sidjdjdj hsjsjsjdj jdjejdjjd jdidjdjd jdjdud hqoskdbcjdod iwheidjd</Value>
+                    </Field>
+                    <Field>
+                        <Id>Horário da ligação de Check-out</Id>
+                        <Value>240520171639</Value>
+                    </Field>
+                    <Field>
+                        <Id>Duração da Ligação de Check-out</Id>
+                        <Value>5</Value>
+                    </Field>
+                    <Field>
+                        <Id>Atendente que realizou o Check-out na PA</Id>
+                        <Value>jsjskdifn hdjdjdjdh</Value>
+                    </Field>
+                </Fields>
+            </Form>
+        </Entry>
+    </PreviousRelatedEntries>
+    
+
+    <!--NAO IMPORTADO NO MOMENTO-->
+    <RelatedEntries>
+        <Entry>
+            <EntryType>25</EntryType>
+            <EntryDate>24052017163424</EntryDate>
+            <EntryDateAge>-546</EntryDateAge>
+            <EntryDateFromEpoch>1495654464000</EntryDateFromEpoch>
+            <EntrySource>4</EntrySource>
+        </Entry>
+        <Entry>
+            <EntryType>23</EntryType>
+            <EntryDate>24052017164213</EntryDate>
+            <EntryDateAge>-77</EntryDateAge>
+            <EntryDateFromEpoch>1495654933000</EntryDateFromEpoch>
+            <EntrySource>4</EntrySource>
+            <Form>
+                <Name>Manutenção Corretiva</Name>
+                <Version>20</Version>
+                <Fields>
+                    <Field>
+                        <Id>Horário da ligação de Check-in</Id>
+                        <Value>240520171639</Value>
+                    </Field>
+                    <Field>
+                        <Id>Duração da ligação Check-in?</Id>
+                        <Value>5</Value>
+                    </Field>
+                    <Field>
+                        <Id>Atendente que realizou o Check-in na PA</Id>
+                        <Value>Bruno</Value>
+                    </Field>
+                    <Field>
+                        <Id>Nome do responsável pelo Posto</Id>
+                        <Value>A</Value>
+                    </Field>
+                    <Field>
+                        <Id>E-mail do posto</Id>
+                        <Value>b</Value>
+                    </Field>
+                    <Field>
+                        <Id>PistaP</Id>
+                        <Value>1</Value>
+                        <Text>Sim</Text>
+                    </Field>
+                    <Field>
+                        <Id>Atividades Realizadas na Pista Principal</Id>
+                        <Value>temos</Value>
+                    </Field>
+                    <Field>
+                        <Id>PistaSec</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Serv</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Teto</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Equip</Id>
+                        <Value>0</Value>
+                        <Text>Não</Text>
+                    </Field>
+                    <Field>
+                        <Id>Problema encontrado no Local</Id>
+                        <Value>hdhsjsjssb shsushshhsue sidjdjdj hsjsjsjdj jdjejdjjd jdidjdjd jdjdud hqoskdbcjdod iwheidjd</Value>
+                    </Field>
+                    <Field>
+                        <Id>Horário da ligação de Check-out</Id>
+                        <Value>240520171639</Value>
+                    </Field>
+                    <Field>
+                        <Id>Duração da Ligação de Check-out</Id>
+                        <Value>5</Value>
+                    </Field>
+                    <Field>
+                        <Id>Atendente que realizou o Check-out na PA</Id>
+                        <Value>jsjskdifn hdjdjdjdh</Value>
+                    </Field>
+                </Fields>
+            </Form>
+        </Entry>
+    </RelatedEntries>
+
+
+    <!--IMAGENS BASE64-->
+    <Files  nodePath="/Entry/Files/File[?]" 
+            nodeType="mainFields" 
+            odooClass="MCorretivaFormFiles" 
+            odooDT="" 
+            odooField="">
+
+        <File   nodePath="/Entry/Files/File[?]" 
+                nodeType="childField" 
+                odooClass="MCorretivaFormFiles" 
+                odooDT="" 
+                odooField="">
+
+            <Guid   nodePath="/Entry/Files/File[?]/Guid" 
+                    nodeType="childFieldData" 
+                    odooClass="MCorretivaFormFiles" 
+                    odooDT="fields.Char(string=u'Guid da Foto')" 
+                    odooField="mco_form_file_guid">
+                    d091c557-d176-443d-aa19-0e7fe0a78ad6
+            </Guid>
+            
+            <Filename   nodePath="/Entry/Files/File[?]/Filename" 
+                        nodeType="childFieldData" 
+                        odooClass="MCorretivaFormFiles" 
+                        odooDT="fields.Char(string=u'Nome do arquivo da Foto')" 
+                        odooField="mco_form_filename">
+                        7685d8d3-6fcb-4752-a3f8-0c33c6ba0c74_0.jpg
+            </Filename>
+            
+            <Id     nodePath="/Entry/Files/File[?]/Id" 
+                    nodeType="childFieldData" 
+                    odooClass="MCorretivaFormFiles" 
+                    odooDT="fields.Char(string=u'Descrição da Foto')" 
+                    odooField="mco_form_file_description">
+                    IMAGENS COMPLEMENTARES
+            </Id>
+
+            <Data   nodePath="/Entry/Files/File[?]/Data" 
+                    nodeType="childFieldData" 
+                    odooClass="MCorretivaFormFiles" 
+                    odooDT="fields.Char(string=u'Foto')" 
+                    odooField="mco_form_file_data">
+                    SAMPLE DATA BASE64:9j/4AAQSFSoozjv6VOv7s98d6HG41qYmmwbRIwPKyHgdM56V1Wg3Am0y6ibH7s7lz6nqawbSIq8/cFzgYrd8PgJaXmVw2R06VnZDTXU//2Q==
+            </Data>
+
+        </File>
+
+    </Files>
+
+
+    <!--FORMULARIO-->
+    <Form   nodePath="/Entry/Form" 
+            nodeType="complex" 
+            odooClass="MCorretivaForm" 
+            odooDT="" 
+            odooField="">
+        
+        <Name   nodePath="/Entry/Form/Name" 
+                nodeType="simple" 
+                odooClass="MCorretivaForm" 
+                odooDT="fields.Char(string=u'Formulário')" 
+                odooField="mco_form_name">
+                Manutenção Corretiva
+        </Name>
+        
+        <Version    nodePath="/Entry/Form/Version" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Integer(string=u'Versão')" 
+                    odooField="mco_form_version">
+                    20
+        </Version>
+
+    
+        <Fields     nodePath="/Entry/Form/Fields" 
+                    nodeType="multipleField" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id>
+                    Horário da ligação de Check-in
+                </Id>
+                <Value>240520171639</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='DurationCheckIn']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'Duração da ligação Check-in?')" 
+                        odooField="mco_form_checkin_call_timing">
+                        Duração da ligação Check-in?
+                </Id>
+                <Value>5</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='AttendantCheckIn']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Atendente que realizou o Check-in na PA')" 
+                        odooField="mco_form_checkin_attendant_by">
+                        Atendente que realizou o Check-in na PA
+                </Id>
+                <Value>Bruno</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='RespStation']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Nome do responsável pelo Posto')" 
+                        odooField="mco_form_station_responsible_name">
+                        Nome do responsável pelo Posto
+                </Id>
+                <Value>Elizeu</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='MailStation']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'E-mail do posto')" 
+                        odooField="mco_form_station_responsible_email">
+                        E-mail do posto
+                </Id>
+                <Value>bordo@esagestao.com.br</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='PistaPFlag']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'PistaPFlag')" 
+                        odooField="mco_form_station_first_line_flag">
+                        PistaPFlag
+                </Id>
+                <Value>1</Value>
+                <Text>Sim</Text>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='ActionPistaP']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Atividades Realizadas na Pista Principal')" 
+                        odooField="mco_form_station_first_line_activities">
+                        Atividades Realizadas na Pista Principal
+                    </Id>
+                <Value>temos</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='PistaSecFlag']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'PistaSec')" 
+                        odooField="mco_form_station_sec_line_flag">
+                        PistaSec
+                </Id>
+                <Value>0</Value>
+                <Text>Não</Text>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='ActionPistaSec']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Atividades realizadas na Pista Secundária')" 
+                        odooField="mco_form_station_sec_line_activities">
+                        Atividades realizadas na Pista Secundária
+                    </Id>
+                <Value></Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='ServerFlag']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'Serv')" 
+                        odooField="mco_form_station_server_flag">
+                        ServerFlag
+                </Id>
+                <Value>0</Value>
+                <Text>Não</Text>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='ActionServer']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Atividades realizadas no Servidor')" 
+                        odooField="mco_form_station_server_activities">
+                        ActionServer
+                    </Id>
+                <Value>Atividade realizadas no servidor</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='RoofFlag']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'Teto')" 
+                        odooField="mco_form_station_roof_flag">
+                        RoofFlag
+                </Id>
+                <Value>0</Value>
+                <Text>Não</Text>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='EquipFlag']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'Equip')" 
+                        odooField="mco_form_station_equipment_flag">
+                        EquipFlag
+                </Id>
+                <Value>0</Value>
+                <Text>Não</Text>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field[Id='EquipList']/Rows" 
+                    nodeType="mainFields" 
+                    odooClass="MCorretivaFormEquipments" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id>EquipList</Id>
+                <Rows>
+                    <Row>
+                        <Field nodePath="/Entry/Form/Fields/Field[Id='EquipList']/Rows/Row[?]/Field[Id='EquipName']/Text"
+                                nodeType="childFieldData" 
+                                odooClass="MCorretivaFormEquipments" 
+                                odooDT="fields.Char(string=u'Equipamento', default='')" 
+                                odooField="mco_form_equip_name">
+                            <Id>Equipamento</Id>
+                            <Value>1</Value>
+                            <Text>Antena 7dBi e leitor RFID 915MHz 802.3af PoE IF1 Honeywell</Text>
+                        </Field>
+
+
+                        <Field nodePath="/Entry/Form/Fields/Field[Id='EquipList']/Rows/Row[?]/Field[Id='EquipAction']/Value"
+                                nodeType="childFieldData" 
+                                odooClass="MCorretivaFormEquipments" 
+                                odooDT="fields.Char(string=u'Ação', default='')" 
+                                odooField="mco_form_equip_action">
+                            <Id>Ação</Id>
+                            <Value>Removido</Value>
+                        </Field>
+
+
+                        <Field nodePath="/Entry/Form/Fields/Field[Id='EquipList']/Rows/Row[?]/Field[Id='EquipPosition']/Value"
+                                nodeType="childFieldData" 
+                                odooClass="MCorretivaFormEquipments" 
+                                odooDT="fields.Char(string=u'Local de Instalação ou Retirada', default='')" 
+                                odooField="mco_form_equip_location">
+                            <Id>Local de Instalação ou Retirada</Id>
+                            <Value>Pista 1</Value>
+                        </Field>
+
+
+                        <Field nodePath="/Entry/Form/Fields/Field[Id='EquipList']/Rows/Row[?]/Field[Id='EquipSerialNumber']/Value"
+                                nodeType="childFieldData" 
+                                odooClass="MCorretivaFormEquipments" 
+                                odooDT="fields.Char(string=u'Número de Série', default='')" 
+                                odooField="mco_form_equip_serial_number">
+                            <Id>Número de Série</Id>
+                            <Value>1234567890</Value>
+                        </Field>
+                    </Row>
+                </Rows>
+            </Field>
+
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='TroubleFound']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Problema encontrado no Local')" 
+                        odooField="mco_form_station_trouble_found">
+                        Problema encontrado no Local
+                    </Id>
+                <Value>Problema encontrado no Local...</Value>
+            </Field>
+
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id>
+                    Horário da ligação de Check-out
+                </Id>
+                <Value>5</Value>
+            </Field>
+
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='DurationCheckOut']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Integer(string=u'Duração da Ligação de Check-out')" 
+                        odooField="mco_form_checkout_call_timing">
+                        Duração da Ligação de Check-out
+                </Id>
+                <Value>5</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='AttendantCheckOut']/Value"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Atendente que realizou o Check-out na PA')" 
+                        odooField="mco_form_checkout_attendant_by">
+                        Atendente que realizou o Check-out na PA
+                </Id>
+                <Value>Bruno</Value>
+            </Field>
+
+        </Fields>
+    </Form>
+
+
+    <!--FUNCIONARIO-->
+    <Employee   nodePath="/Entry/Employee" 
+                nodeType="complex" 
+                odooClass="MCorretivaForm" 
+                odooDT="" 
+                odooField="">
+    
+        <FirstName  nodePath="/Entry/Employee/FirstName" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'Nome do Funcionário')" 
+                    odooField="mco_form_employee_firstname">
+                    SP03 - Italo
+        </FirstName>
+    
+        <EmployeeNumber     nodePath="/Entry/Employee/EmployeeNumber" 
+                            nodeType="simple" 
+                            odooClass="MCorretivaForm" 
+                            odooDT="fields.Char(string=u'Nr. do Funcionário')" 
+                            odooField="mco_form_employee_number">
+                            SP02
+        </EmployeeNumber>
+
+        <DriverID   nodePath="/Entry/Employee/DriverID" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Integer(string=u'Código do Motorista')" 
+                    odooField="mco_form_employee_driver_id">
+                    104
+        </DriverID>
+
+        <Group>
+            <Name   nodePath="/Entry/Employee/Group/Name" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'Grupo do Funcionário')" 
+                    odooField="mco_form_employee_group_name">
+                    ABASTECE
+            </Name>
+        </Group>
+    
+    </Employee>
+
+    <!--TASK-->
+    <Task>
+
+        <TaskNumber     nodePath="/Entry/Task/TaskNumber"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'NÚMERO DA TAREFA')" 
+                        odooField="mco_task_number">
+                        13392
+        </TaskNumber>
+
+
+        <Status>8</Status>
+
+                
+        <Description    nodePath="/Entry/Task/Description"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'NÚMERO DO CHAMADO')" 
+                        odooField="mco_task_request_number">
+                        INC000000005
+        </Description>
+
+        
+        <Data1  nodePath="/Entry/Task/Data1"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Data1')" 
+                        odooField="mco_task_data1">
+                        Short Description from ServiceNow
+        </Data1>
+
+
+        <Data2          nodePath="/Entry/Task/Data2"
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Data2')" 
+                        odooField="mco_task_data2">
+                        Personalizada Baixa
+        </Data2>
+
+
+        <ExternalCreationDate>
+                                22052017080000
+        </ExternalCreationDate>
+
+                            
+
+
+        <ExternalCreationDateAge>-204210</ExternalCreationDateAge>
+        <ExternalCreationDateFromEpoch>1495450800000</ExternalCreationDateFromEpoch>
+        <StartDate>24052017160428</StartDate>
+        <StartDateAge>-2342</StartDateAge>
+        <StartDateFromEpoch>1495652668000</StartDateFromEpoch>
+        <DueDate>24052017183400</DueDate>
+        <DueDateAge>6629</DueDateAge>
+        <DueDateFromEpoch>1495661640000</DueDateFromEpoch>
+        <CreationDate>24052017163333</CreationDate>
+        <CreationDateAge>-597</CreationDateAge>
+        <CreationDateFromEpoch>1495654413000</CreationDateFromEpoch>
+        <TimeWindowPriority>1</TimeWindowPriority>
+        <ServiceTime>0</ServiceTime>
+        <Capacity1>0</Capacity1>
+        <Capacity2>0</Capacity2>
+        <Capacity3>0</Capacity3>
+        <Capacity4>0</Capacity4>
+        <Capacity5>0</Capacity5>
+        
+
+
+        <TaskType>
+            <Code   nodePath="/Entry/Task/TaskType/Code"
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'TaskTypeCode')" 
+                    odooField="mco_task_type_code">
+                    101
+            </Code>
+
+            <Name   nodePath="/Entry/Task/TaskType/Name"
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'TaskTypeName')" 
+                    odooField="mco_task_type_name">
+                    Manutenção Corretiva
+            </Name>
+        </TaskType>
+
+
+        <TaskCategory>
+            <Code   nodePath="/Entry/Task/TaskCategory/Code"
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'TaskCategoryCode')" 
+                    odooField="mco_task_category_code">
+                    101
+            </Code>
+
+            <Name   nodePath="/Entry/Task/TaskCategory/Name"
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'TaskCategoryName')" 
+                    odooField="mco_task_category_name">
+                    Manutenção Corretiva
+            </Name>
+        </TaskCategory>
+
+
+        <Employee>
+            <FirstName>Wellington</FirstName>
+            <EmployeeNumber>2</EmployeeNumber>
+            <DriverID>108</DriverID>
+            <Group>
+                <Name>ABASTECE</Name>
+            </Group>
+        </Employee>
+
+
+        <Customer>
+            <City   nodePath="/Entry/Task/Customer/City" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'Cidade')" 
+                    odooField="mco_task_customer_city">
+                    Sorocaba
+            </City>
+
+
+            <CustomerNumber nodePath="/Entry/Task/Customer/CustomerNumber" 
+                            nodeType="simple" 
+                            odooClass="MCorretivaForm" 
+                            odooDT="fields.Char(string=u'Código do Posto')" 
+                            odooField="mco_task_customer_number">
+                            E2i9
+            </CustomerNumber>
+
+            <HouseNum   nodePath="/Entry/Task/Customer/HouseNum" 
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Nr')" 
+                        odooField="mco_task_customer_address_number">
+                        SP
+            </HouseNum>
+
+            <Name   nodePath="/Entry/Task/Customer/Name" 
+                    nodeType="simple" 
+                    odooClass="MCorretivaForm" 
+                    odooDT="fields.Char(string=u'Nome do Posto')" 
+                    odooField="mco_task_customer_name">
+                    E2i9 Inventário
+            </Name>
+
+            <State  nodePath="/Entry/Task/Customer/State" 
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Estado')" 
+                        odooField="mco_task_customer_state">
+                        SP
+            </State>
+
+
+            <Street     nodePath="/Entry/Task/Customer/Street" 
+                        nodeType="simple" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(string=u'Endereço')" 
+                        odooField="mco_task_customer_street">
+                        Adalgizio Loureiro de Almeida
+            </Street>
+
+            <Layer>
+                <Name>ABASTECE</Name>
+            </Layer>
+        </Customer>
+    </Task>
+
+    <Relationships>
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaFormFiles" 
+                        odooDT="fields.One2many('mcorretiva.mco_form_files', 'mco_form_file_id', u'Form File Id')" 
+                        odooField="mco_form_file_ids"
+                        getValueOf="">
+        </Relationship>
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaFormFiles" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form', u'Fotos', ondelete='cascade', required=True)" 
+                        odooField="mco_form_file_id"
+                        getValueOf="getMainId()">
+        </Relationship>
+
+        <!-- Photo will be updated in a process related with FormFiles -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC01 - EPI')" 
+                        odooField="mco_form_file_pic01_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic01_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic01_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC02 - EPC Pista Principal')" 
+                        odooField="mco_form_file_pic02_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic02_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic02_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC03 - Selo de Manutenção Pista Principal antes do atendimento')" 
+                        odooField="mco_form_file_pic03_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic03_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic03_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC04 - Armário Fechado com Moldura Pista Principal antes do atendimento')" 
+                        odooField="mco_form_file_pic04_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic04_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic04_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC05 - Armário Aberto Pista Principal antes do atendimento')" 
+                        odooField="mco_form_file_pic05_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic05_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic05_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC06 - Armário Aberto Pista Principal após atendimento')" 
+                        odooField="mco_form_file_pic06_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic06_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic06_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC07 - Armário Fechado com Moldura Pista Principal após atendimento')" 
+                        odooField="mco_form_file_pic07_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic07_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic07_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC08 - Selo de Manutenção Pista Principal após atendimento')" 
+                        odooField="mco_form_file_pic08_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic08_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic08_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC09 - EPC Pista Secundária')" 
+                        odooField="mco_form_file_pic09_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic09_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic09_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC10 - Selo de Manutenção Pista Secundária antes do atendimento')" 
+                        odooField="mco_form_file_pic10_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic10_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic10_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC11 - Armário Fechado com Moldura Pista Secundária antes do atendimento')" 
+                        odooField="mco_form_file_pic11_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic11_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic11_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC12 - Armário Aberto Pista Secundária antes do atendimento')" 
+                        odooField="mco_form_file_pic12_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic12_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic12_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC13 - Armário Aberto Pista Secundária após atendimento')" 
+                        odooField="mco_form_file_pic13_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic13_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic13_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC14 - Armário Fechado com Moldura Pista Secundária após atendimento')" 
+                        odooField="mco_form_file_pic14_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic14_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic14_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC15 - Selo de Manutenção Pista Secundária após atendimento')" 
+                        odooField="mco_form_file_pic15_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic15_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic15_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC16 - Selo Manutenção Rack do Servidor antes do atendimento')" 
+                        odooField="mco_form_file_pic16_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic16_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic16_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC17 - Rack do Servidor fechado antes do atendimento')" 
+                        odooField="mco_form_file_pic17_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic17_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic17_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC18 - Rack do Servidor aberto antes do atendimento')" 
+                        odooField="mco_form_file_pic18_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic18_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic18_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC19 - Rack do Servidor aberto após atendimento')" 
+                        odooField="mco_form_file_pic19_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic19_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic19_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC20 - Rack do Servidor fechado após atendimento')" 
+                        odooField="mco_form_file_pic20_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic20_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic20_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC21 - Selo Manutenção Rack do Servidor após atendimento')" 
+                        odooField="mco_form_file_pic21_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic21_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic21_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC22 - Luminárias Acessas Pista Principal antes do atendimento')" 
+                        odooField="mco_form_file_pic22_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic22_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic22_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC23 - Luminárias Acessas Pista Principal após atendimento')" 
+                        odooField="mco_form_file_pic23_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic23_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic23_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC24 - Luminárias Acessas Pista Secundária antes do atendimento')" 
+                        odooField="mco_form_file_pic24_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic24_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic24_img"
+                        getValueOf="">
+        </Relationship>
+
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC25 - Luminárias Acessas Pista Secundária após atendimento')" 
+                        odooField="mco_form_file_pic25_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic25_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic25_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC26 - Teste de Abastecimento Pista Principal')" 
+                        odooField="mco_form_file_pic26_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic26_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic26_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC27 - Teste de Abastecimento Pista Secundária')" 
+                        odooField="mco_form_file_pic27_id"
+                        getValueOf="">
+        </Relationship>
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic27_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic27_img"
+                        getValueOf="">
+        </Relationship>
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form_files', u'PIC28 - Assinatura do Responsável pelo posto')" 
+                        odooField="mco_form_file_pic28_id"
+                        getValueOf="">
+        </Relationship> 
+        <!-- Related to use on Odoo Views Tab Bar -->
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.Char(related='mco_form_file_pic28_id.mco_form_file_data')" 
+                        odooField="mco_form_file_pic28_img"
+                        getValueOf="">
+        </Relationship>
+
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaForm" 
+                        odooDT="fields.One2many('mcorretiva.mco_form_equipments', 'mco_form_equip_id', u'Equip Id')" 
+                        odooField="mco_form_equipment_ids"
+                        getValueOf="">
+        </Relationship>
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="MCorretivaFormEquipments" 
+                        odooDT="fields.Many2one('mcorretiva.mco_form', u'Lista de Equipamentos', ondelete='cascade', required=True)" 
+                        odooField="mco_form_equip_id"
+                        getValueOf="getMainId()">
+        </Relationship>     
+
+    
+    </Relationships>
+
+</Entry>

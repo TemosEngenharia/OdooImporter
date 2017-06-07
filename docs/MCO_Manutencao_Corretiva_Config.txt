@@ -1,0 +1,24 @@
+ID_OFFICETRACK| ID_IMPORTER | VALUE | XPATH | SAMPLE VALUE
+
+TimeCheckIn|mco_form_checkin_call_datetime|/Entry/Form/Fields/Field[Id='Horário da ligação de Check-in']/Value|10012017121749 -> 17/12/2017 13:00|
+DurationCheckIn|mco_form_checkin_call_timing|/Entry/Form/Fields/Field[Id='Duração da ligação Check-in?']/Value|5|
+AttendantCheckIn|mco_form_checkin_attendant_by|Atendente que realizou o Check-in na PA|/Entry/Form/Fields/Field[Id='Atendente que realizou o Check-in na PA']/Value|Bruno
+RespStation|mco_form_station_responsible_name|Nome do responsável pelo Posto|/Entry/Form/Fields/Field[Id='Nome do responsável pelo Posto']/Value|Elizeubordo@esagestao.com.br
+MailStation|mco_form_station_responsible_email|E-mail do posto|/Entry/Form/Fields/Field[Id='E-mail do posto']/Value|bordo@esagestao.com.br
+PistaPFlag|mco_form_station_first_line_flag|/Entry/Form/Fields/Field[Id='PistaP']/Value|1|
+ActionPistaP|mco_form_station_first_line_activities|/Entry/Form/Fields/Field[Id='Atividades Realizadas na Pista Principal']/Value|temos|
+PistaSecFlag|mco_form_station_sec_line_flag|/Entry/Form/Fields/Field[Id='PistaSec']/Value|0|
+ActionPistaSec|mco_form_station_sec_line_activities|/Entry/Form/Fields/Field[Id='Atividades realizadas na Pista Secundária']/Value||
+ServerFlag|mco_form_station_server_flag|/Entry/Form/Fields/Field[Id='Serv']/Value|0|
+ActionServer|mco_form_station_server_activities|/Entry/Form/Fields/Field[Id='Atividades realizadas no Servidor']/Value|Atividade realizadas no servidor|
+RoofFlag|mco_form_station_roof_flag|/Entry/Form/Fields/Field[Id='Teto']/Value|0|
+EquipFlag|mco_form_station_equipment_flag|/Entry/Form/Fields/Field[Id='Equip']/Value|0|
+EquipList||/Entry/Form/Fields/Field[Id='Lista de Equipamentos']||
+EquipName|mco_form_equip_name|/Entry/Form/Fields/Field[Id='Lista de Equipamentos']/Rows/Row[?]/Field[Id='Equipamento']/Text|Antena 7dBi e leitor RFID 915MHz 802.3af PoE IF1 Honeywell|
+EquipAction|mco_form_equip_action|/Entry/Form/Fields/Field[Id='Lista de Equipamentos']/Rows/Row[?]/Field[Id='Ação']/Value|Removido|
+EquipPosition|mco_form_equip_location|/Entry/Form/Fields/Field[Id='Lista de Equipamentos']/Rows/Row[?]/Field[Id='Local de Instalação ou Retirada']/Value|Pista 1|
+EquipSerialNumber|mco_form_equip_serial_number|/Entry/Form/Fields/Field[Id='Lista de Equipamentos']/Rows/Row[?]/Field[Id='Número de Série']/Value|1234567890|
+TroubleFound|mco_form_station_trouble_found|/Entry/Form/Fields/Field[Id='Problema encontrado no Local']/Value|Problema encontrado no Local...|
+TimeCheckOut|mco_form_checkout_call_datetime|/Entry/Form/Fields/Field[Id='Horário da ligação de Check-out']/Value|10012017121749 -> 17/12/2017 13:00|
+DurationCheckOut|mco_form_checkout_call_timing|/Entry/Form/Fields/Field[Id='Duração da Ligação de Check-out']/Value|5|
+AttendantCheckOut|mco_form_checkout_attendant_by|/Entry/Form/Fields/Field[Id='Atendente que realizou o Check-out na PA']/Value|Bruno|

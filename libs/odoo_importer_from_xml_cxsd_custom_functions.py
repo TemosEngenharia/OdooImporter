@@ -140,7 +140,7 @@ def getSchemaFilenameForPrefix(prefix):
     logger = logging.getLogger(__name__)
 
     if prefix in ["MCO"]:
-      return 'MCO_20170605_181500_D01.cxsd'
+      return 'MCO_20170607_150100_D02.cxsd'
 
     if prefix in ["COR9_"]:
       return 'COR09.cxsd'
