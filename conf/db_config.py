@@ -1,7 +1,7 @@
 # ATT 2017-05-03 v10.0.52 - New odoo Config Function
 #!/usr/bin/python
 #Logging Required Imports
-import logging_config as lc
+from . import logging_config as lc
 import logging
 
 from configparser import ConfigParser

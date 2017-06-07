@@ -1,5 +1,6 @@
 
 #
+# ATT 2017-06-06 v10.1.00 - Refactoring project.
 # ATT 2017-04-26 v10.0.52 - New odoo config loader
 # ATT 2017-04-26 v10.0.1
 #
@@ -8,10 +9,10 @@
 # SETTINGS
 #
 #Logging Required Imports
-import logging_config as lc
+from . import logging_config as lc
 import logging
 
-from db_config import odoo_config
+from .db_config import odoo_config
 
 
 try:
@@ -72,8 +73,8 @@ def init(arg):
   #outputORMFile = outputORMPath + outputORMFileName
 
   global outputORMPath_InDataDomain, outputORMFileName_InDataDomain, outputORMFile_InDataDomain
-  outputORMPath_InDataDomain = "../OdooImporterData/mcorretiva/models/"
-  outputORMFileName_InDataDomain = "mcorretiva_model.py"
+  outputORMPath_InDataDomain = "../OdooImporter/data/mco/models/"
+  outputORMFileName_InDataDomain = "mco_model.py"
   outputORMFile_InDataDomain = outputORMPath_InDataDomain + outputORMFileName_InDataDomain
 
   

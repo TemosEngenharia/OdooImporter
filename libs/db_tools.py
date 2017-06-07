@@ -1,9 +1,38 @@
 # ATT 2017-05-03 v10.0.52 - Database Insert Command execution
 
 import psycopg2
-from db_config import db_config
- 
+from conf.db_config import db_config
+ #Logging Required Imports
+import conf.logging_config as lc
+import logging
+
+def updateDB(updateSQL):
+    logger = logging.getLogger(__name__)
+    conn = None
+    inserted_id = None
+
+    try:
+        # read database configuration
+        params = db_config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.execute(updateSQL)
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+
 def insertInToDB(insertMainSQL):
+    logger = logging.getLogger(__name__)
     conn = None
     inserted_id = None
 
@@ -23,7 +52,7 @@ def insertInToDB(insertMainSQL):
         # close communication with the database
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        logger.error(error)
     finally:
         if conn is not None:
             conn.close()
@@ -33,6 +62,7 @@ def insertInToDB(insertMainSQL):
  
 
 def deleteFromDB(deleteSQL):
+    logger = logging.getLogger(__name__)
     conn = None
     inserted_id = None
 
@@ -50,7 +80,7 @@ def deleteFromDB(deleteSQL):
         # close communication with the database
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        logger.error(error)
     finally:
         if conn is not None:
             conn.close()    
@@ -58,6 +88,7 @@ def deleteFromDB(deleteSQL):
 
 
 def insert_vendor_sample(vendor_name):
+    logger = logging.getLogger(__name__)
     """ insert a new vendor into the vendors table """
     sql = """INSERT INTO vendors(vendor_name)
              VALUES(%s) RETURNING vendor_id;"""
@@ -79,7 +110,7 @@ def insert_vendor_sample(vendor_name):
         # close communication with the database
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        logger.error(error)
     finally:
         if conn is not None:
             conn.close()

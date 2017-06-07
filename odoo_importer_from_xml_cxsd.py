@@ -16,13 +16,13 @@
 #
 
 #Logging Required Imports
-import logging_config as lc
+import conf.logging_config as lc
 import logging
-
+import re
 import datetime
-import odoo_importer_from_xml_cxsd_config as config 
-import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
-import db_tools as dbtools 
+import conf.odoo_importer_from_xml_cxsd_config as config 
+import libs.odoo_importer_from_xml_cxsd_custom_functions as cfuncs
+import libs.db_tools as dbtools 
 from os import listdir
 from os.path import isfile, join
 from os import walk
@@ -207,23 +207,25 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
                 fieldsNamesList, fieldsValuesList = mountFieldsAndValues(modelsClasses[i], modelFields, 0, xmlDoc)
 
-                sqlInsertOutput = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList)
+                sqlInsertOutput = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList, -1)
 
                 #Print out SQL That will be run on cursor
-                #logger.info("SQL Main:" + sqlInsertOutput)
+                logger.info("SQL Main:" + sqlInsertOutput)
 
                 deleteBeforeInsert = "DELETE FROM " + tableClassName + " WHERE "+ config.sourceFilenameFieldName + " LIKE '" + config.inputXMLFileName + "';"
 
                 logger.info("Running:" + deleteBeforeInsert)
                 dbtools.deleteFromDB(deleteBeforeInsert)
 
-                logger.info(sqlInsertOutput)
+                sqlInsertOutputLog = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList, 41)
+                logger.info("SQL Main Insert:" + sqlInsertOutputLog)
+                #sqlInsertOutputLog = ""
 
                 #Run INSERT ON SQL POSTGREE
                 config.main_id = dbtools.insertInToDB(sqlInsertOutput)
 
                 #Print Inserted ID
-                logger.info("\n  *>>indexRow:[" + str(i) + "] Inserted Main ID:[" + str(config.main_id) + "]")
+                logger.info("*> File Index:[" + str(i) + "] Inserted Main ID:[" + str(config.main_id) + "]")
 
                 if config.main_id is None:
                     config.main_id = -1
@@ -241,15 +243,15 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
                     insertRolls = int(xmlDoc.xpath("count(" + modelsClasses[i]["nodePath"] + ")"))
                     #insertRolls = 0
                 except Exception:
-                    logger.info("\n<CError> Invalid nodePath:" + modelsClasses[i]["nodePath"] + " for Class:" + modelsClasses[i]['odooClass'] + " nodeType:" + modelsClasses[i]['nodeType'])
-                    logger.info("<CError> Must allow XPath count(nodePath) function on it!! Skipping this insert...\n")
+                    logger.warn("\n<CError> Invalid nodePath:" + modelsClasses[i]["nodePath"] + " for Class:" + modelsClasses[i]['odooClass'] + " nodeType:" + modelsClasses[i]['nodeType'])
+                    logger.warn("<CError> Must allow XPath count(nodePath) function on it!! Skipping this insert...\n")
                     insertsRolls = 0
                     pass
 
                 #Mount Insert n times and Run It
                 for n in range(insertRolls): #xrange(1,10):
 
-                    logger.info("\n\n>> [" + str(n) + "] Running: OdooClass:" + modelsClasses[i]['odooClass'] + "  >>  NodeType:" + modelsClasses[i]["nodeType"]  + "  >>  NodePath:" + modelsClasses[i]["nodePath"] )
+                    ##logger.info("\n\n>> [" + str(n) + "] Running: OdooClass:" + modelsClasses[i]['odooClass'] + "  >>  NodeType:" + modelsClasses[i]["nodeType"]  + "  >>  NodePath:" + modelsClasses[i]["nodePath"] )
 
                     #Transform Table Name (Dot to Underlines)
                     tableClassName = 'public.' + modelsClasses[i]['odooDT'].replace('.', '_')
@@ -261,11 +263,32 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
                                                                                         cxsd, 
                                                                                         xmlDoc
                                                                                         )
-
-                    sqlInsertOutput = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList)
                     
+                    
+                    sqlInsertOutputLog = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList, 41)
+                    logger.info("SQL Child Insert:" + sqlInsertOutputLog)
+                    #sqlInsertOutputLog = ""
+
                     #Run INSERT ON SQL POSTGREE
+                    sqlInsertOutput = mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList, -1)
+                    
                     child_id = dbtools.insertInToDB(sqlInsertOutput)
+
+                    
+                    #Special Update to avoid SQL Trigger Usage
+                    #When a file is added, update Main with related id.
+                    if tableClassName=='public.mcorretiva_mco_form_files':
+                        
+                        #Find Id
+                        picNumber = re.findall(r'\d+', fieldsValuesList[2])[0]
+
+                        sUpdate = "UPDATE mcorretiva_mco_form SET mco_form_file_pic" + picNumber + "_id=" + str(child_id) + " WHERE mcorretiva_mco_form.id = " + str(config.main_id) + ";"           
+
+                        logger.info(sUpdate)
+                        
+                        dbtools.updateDB(sUpdate)
+
+
 
                     sqlInsertOutput=""
 
@@ -275,7 +298,7 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
                     else:
                         status = True
                     #Print Inserted ID
-                    logger.info("\n  *>>indexRow:[" + str(i) + "] Inserted Child ID:[" + str(child_id) + "]")
+                    logger.info("*>> MainId:[" + str(config.main_id) + "] ChildIndex:[" + str(i) + "] Inserted Child ID:[" + str(child_id) + "]")
 
                     #exit()
 
@@ -285,7 +308,7 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
 
 
-def mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList):
+def mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValuesList, cutStrValueIn):
     logger = logging.getLogger(__name__)
     sqlInsertFormat = "INSERT INTO {0} (\n {1} \n) VALUES (\n {2} \n) RETURNING {3};"
     
@@ -299,16 +322,33 @@ def mountSQlInsert(sqlInsertOutput, tableClassName, fieldsNamesList, fieldsValue
 
     #logger.info(fieldsValuesOdoo)
     #exit()
+    fNL = fieldsNamesList[:]
+    fVL = fieldsValuesList[:]
+    fNL.extend(fieldsNamesOdoo.split(", "))
+    fVL.extend(fieldsValuesOdoo)
 
-    fieldsNamesList.extend(fieldsNamesOdoo.split(", "))
-    fieldsValuesList.extend(fieldsValuesOdoo)
 
+    #Logger shorting long strings
+    fieldsValuesListLog=[]
+    
+    if(cutStrValueIn > 0):
+        for itemValue in fVL:
+            if isinstance(itemValue, str):
+                if len(itemValue)>cutStrValueIn:
+                    fieldsValuesListLog.append(itemValue[:cutStrValueIn] + "'")
+                else:
+                    fieldsValuesListLog.append(itemValue)
+            else:
+                fieldsValuesListLog.append(itemValue)
+
+        fVL = fieldsValuesListLog[:]
+           
     #logger.info(fieldsNamesList)
     #logger.info(fieldsValuesList)
 
     #Fields and Values from XML to SQL
-    fieldsNames = ', '.join(fieldsNamesList)
-    fieldsValues = ', '.join(fieldsValuesList)
+    fieldsNames = ', '.join(fNL)
+    fieldsValues = ', '.join(fVL)
     
     return sqlInsertOutput + "\n" + sqlInsertFormat.format(
                                                         tableClassName,
@@ -435,9 +475,9 @@ def mountFieldsAndValuesOfMainFields(modelClass, modelFields, indexRow, cxsd, xm
                 #Append value formatted for sql datatype
                 fieldsValuesList.append(getFormattedSQLValue(fieldDataType, fieldValue))
 
-                logger.info("\n  >>>-  ClassName=[" + fieldClassName + "] - FieldNodeType=[" + fieldNodeType + 
-                        "] - FieldNodePath=[" + fieldValuePath + "]\n     >> FieldName=[" + fieldName + "]  -  FieldDataType=[" + fieldDataType + "]")
-                logger.info("      > VALUE=[" + fieldValue[:64] + "]")
+                ##logger.info("\n  >>>-  ClassName=[" + fieldClassName + "] - FieldNodeType=[" + fieldNodeType + 
+                ##        "] - FieldNodePath=[" + fieldValuePath + "]\n     >> FieldName=[" + fieldName + "]  -  FieldDataType=[" + fieldDataType + "]")
+                ##logger.info("      > VALUE=[" + fieldValue[:64] + "]")
 
 
         #Get ID of Main based on RelationShip using GetValueOf content
@@ -492,7 +532,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
     if nodeType in ["simple"]:
 
         #DETAIL EACH SIMPLE ITEM ON LOG
-        logger.info("indexRow["+str(indexRow)+"]"+field['nodePath'])
+        ##logger.info("indexRow["+str(indexRow)+"]"+field['nodePath'])
         
         try:
             #Get value for this field on xml
@@ -564,7 +604,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
         #Remove outer spaces
         outputValue=outputValue.strip()
 
-    logger.info(" [" + str(outputValue) + "]")
+    ##logger.info(" [" + str(outputValue) + "]")
     
     if outputValue == "":
         outputValue = "NULL"
@@ -708,8 +748,8 @@ def main():
 
 
                 #Schema chooser
-                config.inputCXSDPath = "../OdooImporterData/mcorretiva/schemas/"
-                config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
+                config.inputCXSDPath = "../OdooImporter/data/mco/schemas/"
+                config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
                 config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
                 
                 

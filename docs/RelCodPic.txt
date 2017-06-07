@@ -1,0 +1,28 @@
+PIC01 - EPI
+PIC02 - EPC Pista Principal
+PIC03 - Selo de Manutenção Pista Principal antes do atendimento
+PIC04 - Armário Fechado com Moldura Pista Principal antes do atendimento
+PIC05 - Armário Aberto Pista Principal antes do atendimento
+PIC06 - Armário Aberto Pista Principal após atendimento
+PIC07 - Armário Fechado com Moldura Pista Principal após atendimento
+PIC08 - Selo de Manutenção Pista Principal após atendimento
+PIC09 - EPC Pista Secundária
+PIC10 - Selo de Manutenção Pista Secundária antes do atendimento
+PIC11 - Armário Fechado com Moldura Pista Secundária antes do atendimento
+PIC12 - Armário Aberto Pista Secundária antes do atendimento
+PIC13 - Armário Aberto Pista Secundária após atendimento
+PIC14 - Armário Fechado com Moldura Pista Secundária após atendimento
+PIC15 - Selo de Manutenção Pista Secundária após atendimento
+PIC16 - Selo Manutenção Rack do Servidor antes do atendimento
+PIC17 - Rack do Servidor fechado antes do atendimento
+PIC18 - Rack do Servidor aberto antes do atendimento
+PIC19 - Rack do Servidor aberto após atendimento
+PIC20 - Rack do Servidor fechado após atendimento
+PIC21 - Selo Manutenção Rack do Servidor após atendimento
+PIC22 - Luminárias Acessas Pista Principal antes do atendimento
+PIC23 - Luminárias Acessas Pista Principal após atendimento
+PIC24 - Luminárias Acessas Pista Secundária antes do atendimento
+PIC25 - Luminárias Acessas Pista Secundária após atendimento
+PIC26 - Teste de Abastecimento Pista Principal
+PIC27 - Teste de Abastecimento Pista Secundária
+PIC28 - Assinatura do Responsável pelo posto

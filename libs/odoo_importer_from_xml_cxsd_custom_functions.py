@@ -8,11 +8,12 @@
 # CUSTOM FUNCTIONS FOR XML IMPORT
 #
  #Logging Required Imports
-import logging_config as lc
+import conf.logging_config as lc
 import logging
 
-import odoo_importer_from_xml_cxsd_config as config
-import odoo_importer_from_xml_cxsd as importer
+import conf.odoo_importer_from_xml_cxsd_config as config
+#import odoo_importer_from_xml_cxsd as importer
+
 import sys
 import random
 import time
@@ -138,8 +139,8 @@ def convertDateTimeFromEpochDateTime(datetime_from_epoch_ms):
 def getSchemaFilenameForPrefix(prefix):
     logger = logging.getLogger(__name__)
 
-    if prefix in ["MCO20"]:
-      return 'MCO20-dev.cxsd'
+    if prefix in ["MCO"]:
+      return 'MCO_20170605_181500_D01.cxsd'
 
     if prefix in ["COR9_"]:
       return 'COR09.cxsd'

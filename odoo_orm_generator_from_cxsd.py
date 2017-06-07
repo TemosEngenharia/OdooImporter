@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding uft-8 -*-
 #
+# ATT 2017-06-05 v.v10.1.0 - refactoring paths
 # ATT 2017-05-22 v.v10.0.57 - first line added to allow execute without python pre-command on prompt
 # ATT 2017-05-05 v.v10.0.56 - setting creation using COR27.cxsd
 # ATT 2017-05-02 v.v10.0.51 - new child class and relationship
@@ -14,8 +15,8 @@
 #
 
 import datetime
-import odoo_importer_from_xml_cxsd_config as config 
-import odoo_importer_from_xml_cxsd_custom_functions as cfuncs
+import conf.odoo_importer_from_xml_cxsd_config as config 
+import libs.odoo_importer_from_xml_cxsd_custom_functions as cfuncs
 
 
 def odooGenerateOrmFromCXSD(schema_Parsed_Root):
@@ -241,10 +242,10 @@ def main():
 
     # RUNNING
     #Schema chooser
-    filename = "MCO20"
+    filename = "MCO"
 
-    config.inputCXSDPath = "../OdooImporterData/mcorretiva/schemas/"
-    config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:5])
+    config.inputCXSDPath = "data/mco/schemas/"
+    config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
     config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 
     print("> > > Creating by Custom Schema:" + config.inputCXSDFile)
