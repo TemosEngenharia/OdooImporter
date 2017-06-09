@@ -11,7 +11,7 @@ import logging.config
 # Use the file logginh.json for any customize on configuration.
 
 def setup_logging(
-    default_path='logging_config.json',
+    default_path='/etc/OdooImporter/logging_config.json',
     default_level=logging.INFO,
     env_key='LOG_CFG'
     ):

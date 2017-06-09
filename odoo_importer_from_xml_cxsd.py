@@ -690,7 +690,7 @@ def main():
     file_prefix = 'MCO'
     config.sourceFilenameFieldName = 'xml_source_filename'
 
-    config.inputXMLPath = "../OdooImporterData/mcorretiva/xml/QUEUE/" # + file_prefix + "/"
+    config.inputXMLPath = "/opt/files/xmls/mco/" # + file_prefix + "/"
     #inputXMLFileName = "corretiva_v20_20170110-121749.xml"
     #inputXMLFileName = "COR16_1.xml"
     #inputXMLFileName = "COR16_2.xml"
@@ -740,7 +740,7 @@ def main():
             #if 0==0:
                 config.inputXMLFileName = filename
                 config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
-                
+
                 #logger.info(config.inputXMLFile)
                 logger.info("> > > Processing XML Doc:" + cfuncs.getXMLFilename())
 
@@ -751,8 +751,7 @@ def main():
                 config.inputCXSDPath = "../OdooImporter/data/mco/schemas/"
                 config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
                 config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
-                
-                
+
                 logger.info("> > > Processing With Custom Schema:" + config.inputCXSDFile)
 
                 schema_Parsed_Root = config.etree.parse(config.inputCXSDFile).getroot()
@@ -773,12 +772,12 @@ def main():
                 status = False
             
             #move file to OK Subfolder
-            #if status==True:
-            #    rename(config.inputXMLFile, config.inputXMLPath + "OK/" + config.inputXMLFileName)
+            if status==True:
+                rename(config.inputXMLFile, config.inputXMLPath + "processed/" + config.inputXMLFileName)
 
             #move file to ERRORS Subfolder
-            #if status==False:
-            #   rename(config.inputXMLFile, config.inputXMLPath + "ERRORS/" + config.inputXMLFileName)  
+            if status==False:
+               rename(config.inputXMLFile, config.inputXMLPath + "errors/" + config.inputXMLFileName)  
 
 
 
