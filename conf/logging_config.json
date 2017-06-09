@@ -20,7 +20,7 @@
             "level": "INFO",
             "formatter": "simple",
             "when": "midnight",
-            "filename": "/var/log/odoo-dev/odoo_importer/info.txt",
+            "filename": "/odoo_importer/info.txt",
             "interval": 1,
             "backupCount": 7,
             "encoding": "utf8"
@@ -31,7 +31,7 @@
             "level": "ERROR",
             "formatter": "simple",
             "when": "midnight",
-            "filename": "/var/log/odoo-dev/odoo_importer/errors.txt",
+            "filename": "/odoo_importer/errors.txt",
             "interval": 1,
             "backupCount": 7,
             "encoding": "utf8"
