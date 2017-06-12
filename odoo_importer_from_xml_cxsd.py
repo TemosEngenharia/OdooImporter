@@ -746,7 +746,7 @@ def main():
             if 0==0:
                 config.inputXMLFileName = filename
                 config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
-                
+
                 #logger.info(config.inputXMLFile)
                 logger.info("> > > Processing XML Doc:" + cfuncs.getXMLFilename())
 
@@ -757,8 +757,7 @@ def main():
                 config.inputCXSDPath = "../OdooImporter/data/mco/schemas/"
                 config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
                 config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
-                
-                
+
                 logger.info("> > > Processing With Custom Schema:" + config.inputCXSDFile)
 
                 schema_Parsed_Root = config.etree.parse(config.inputCXSDFile).getroot()
@@ -782,12 +781,14 @@ def main():
                 #pass
 
             #move file to OK Subfolder
+
             #if status==True:
                 rename(config.inputXMLFile, config.inputXMLPath + "processed/" + config.inputXMLFileName)
 
             #move file to ERRORS Subfolder
             ##if status==False:
             ##   rename(config.inputXMLFile, config.inputXMLPath + "errors/" + config.inputXMLFileName)  
+
 
 
 
