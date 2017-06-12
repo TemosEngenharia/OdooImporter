@@ -292,17 +292,15 @@ def odooInsert(schema_Parsed_Root, xmldoc_Parsed_Root, runInsertsOnDB):
 
                     sqlInsertOutput=""
 
-                    if child_id is None:
-                        child_id = -1
-                        status = False
-                    else:
-                        status = True
+                    #if child_id is None:
+                    #    child_id = -1
+                    #    status = False
+                    #else:
+                    #    status = True
+
                     #Print Inserted ID
                     logger.info("*>> MainId:[" + str(config.main_id) + "] ChildIndex:[" + str(i) + "] Inserted Child ID:[" + str(child_id) + "]")
 
-                    #exit()
-
-    
 
     return status
 
@@ -398,6 +396,8 @@ def mountFieldsAndValues(modelClass, modelFields, indexRow, xmlDoc):
 
             #Get value for this field on xml
             fieldValue = getValueForFieldByNodeType(field, fieldNodeType, fieldNodePath, xmlDoc, indexRow)
+
+            ##logger.warn(fieldValue)
 
             #Append Field Name
             fieldsNamesList.append(fieldName)
@@ -527,6 +527,9 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
                         
     outputValue=""
 
+    logger.warn("NODEPATH = " + nodePath)
+
+
     #Only odoo fields and datatype defined
 
     if nodeType in ["simple"]:
@@ -549,7 +552,8 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
         except Exception as e:
             logger.error(e)
-            outputValue = ""            
+            outputValue = ""
+            pass            
 
     #Deal with custom fields with has not value on xml
     elif nodeType in ["extraField"]:
@@ -562,10 +566,12 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
             try:
                 outputValue = eval(getValueOf)
 
-            except AttributeError:
-
+            except Exception as e:
                 logger.error('ERR:eval(' + getValueOf + ")")
+                logger.error(e)
                 outputValue = ""
+                pass
+                
         else:
 
             try:
@@ -576,7 +582,6 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
                     newNodePath = nodePath
 
                 outputValue = xmlDoc.xpath(newNodePath)[indexRow].text
-
 
             except Exception as e:
                 logger.error(e)
@@ -594,6 +599,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
 
 
         except Exception as e:
+            logger.error(e)
             logger.warn("NODE UNDEFINED:" + nodePath)
             outputValue = ""
 
@@ -604,7 +610,7 @@ def getValueForFieldByNodeType(field, nodeType, nodePath, xmlDoc, indexRow):
         #Remove outer spaces
         outputValue=outputValue.strip()
 
-    ##logger.info(" [" + str(outputValue) + "]")
+    logger.warn("OUTPUTVALUE [" + str(outputValue) + "]")
     
     if outputValue == "":
         outputValue = "NULL"
@@ -736,8 +742,8 @@ def main():
         if filename[:len(file_prefix)]==file_prefix: 
             logger.info("> > > >"+ filename)
 
-            try:
-            #if 0==0:
+            #try:
+            if 0==0:
                 config.inputXMLFileName = filename
                 config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
 
@@ -764,20 +770,25 @@ def main():
                 logger.info("\n#EOF status:" + str(status))
 
             #try:
-            #    ab=""
-            except Exception as e:
+                ab=""
+            #except Exception as e:
                 #raise e
-                logger.error("Error:" + config.inputXMLFile + "\n" + str(e))
+                #logger.error("Error:" + config.inputXMLFile + "\n" + str(e))
+                #logger.error(e)
 
-                status = False
-            
+                #status = False
+                
+                #pass
+
             #move file to OK Subfolder
-            if status==True:
+
+            #if status==True:
                 rename(config.inputXMLFile, config.inputXMLPath + "processed/" + config.inputXMLFileName)
 
             #move file to ERRORS Subfolder
-            if status==False:
-               rename(config.inputXMLFile, config.inputXMLPath + "errors/" + config.inputXMLFileName)  
+            ##if status==False:
+            ##   rename(config.inputXMLFile, config.inputXMLPath + "errors/" + config.inputXMLFileName)  
+
 
 
 

@@ -41,6 +41,7 @@ def getSQLDateTimeFromJoinedStringInternational(joined_datetime_string):
 
     if len(joined_datetime_string) == 12:
 
+
         dt = datetime.strptime(joined_datetime_string, "%Y%m%d%H%M")
         return dt.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -55,15 +56,21 @@ def getSQLDateTimeFromJoinedStringInternational(joined_datetime_string):
 
 def getSQLDateTimeFromJoinedStringBrazilian(joined_datetime_string):
     logger = logging.getLogger(__name__)
+    ##logger.warn(nodePath)
+    ##logger.warn(getValueOf)
+    ##logger.warn(joined_datetime_string)
+    ##exit(1)
 
     if len(joined_datetime_string) == 12:
-
         dt = datetime.strptime(joined_datetime_string, "%d%m%Y%H%M")
+        
         return dt.strftime('%Y-%m-%d %H:%M:%S')
 
     elif len(joined_datetime_string) == 14:
-
+        #08062017135811
         dt = datetime.strptime(joined_datetime_string, "%d%m%Y%H%M%S")
+        ##logger.warn(joined_datetime_string)
+        
         return dt.strftime('%Y-%m-%d %H:%M:%S')
 
     else:
