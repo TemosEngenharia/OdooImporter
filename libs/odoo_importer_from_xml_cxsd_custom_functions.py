@@ -17,7 +17,8 @@ import conf.odoo_importer_from_xml_cxsd_config as config
 import sys
 import random
 import time
-from datetime import datetime, timezone #Py3
+import csv
+from datetime import datetime, timezone, timedelta #Py3
 
 def getMainId():
     logger = logging.getLogger(__name__)
@@ -91,6 +92,99 @@ def sec2time(sec, n_msec=3):
         return pattern % (h, m, s)
     return ('%d days, ' + pattern) % (d, h, m, s)
 
+def check_sunday(_datetime):
+    '''Check if _datetime is sunday and return True if is not return False'''
+    if _datetime.weekday() == 6:
+        return True
+    else:
+        return False
+
+
+def check_holiday_csv(_datetime):
+    with open('/etc/OdooImporter/feriados.csv', newline='') as csvfile:
+        csvferiados = csv.reader(csvfile, delimiter=';', quotechar='|')
+        for feriado in csvferiados:
+            if datetime(feriado[0]) == _datetime:
+                return True
+            else:
+                pass
+        return False
+            
+
+#Returns delta time between two dates.
+def getDeltaTimeBrazilianDateTimeStringsHolidays(old_date_time_joined_string, new_date_time_joined_string):
+    logger = logging.getLogger(__name__)
+
+    dateTimeStringOld = getSQLDateTimeFromJoinedStringBrazilian(old_date_time_joined_string)
+    dateTimeStringNew = getSQLDateTimeFromJoinedStringBrazilian(new_date_time_joined_string)
+    
+    dateTimeOld = datetime.strptime(dateTimeStringOld, '%Y-%m-%d %H:%M:%S')
+    dateTimeNew = datetime.strptime(dateTimeStringNew, '%Y-%m-%d %H:%M:%S')
+  
+    logger.info('Início do SLA: %s' % dateTimeOld)
+    logger.info('Fim do SLA: %s' % dateTimeNew)
+    logger.info('Delta 24horas: %s' % (dateTimeNew-dateTimeOld))
+
+    delta_horas = timedelta(hours=0)
+    delta_dia = timedelta(hours=12)
+    d = timedelta(days=1)
+    check_day = dateTimeOld
+    delta_full_days = dateTimeNew.day - dateTimeOld.day - 1
+    first_day_start = datetime(dateTimeOld.year, dateTimeOld.month, dateTimeOld.day, 7, 30)
+    first_day_end = datetime(dateTimeOld.year, dateTimeOld.month, dateTimeOld.day, 19, 30)
+    last_day_start = datetime(dateTimeNew.year, dateTimeNew.month, dateTimeNew.day, 7, 30)
+    last_day_end = datetime(dateTimeNew.year, dateTimeNew.month, dateTimeNew.day, 19, 30)
+
+
+    if delta_full_days >= 0:
+        run = delta_full_days
+        while run > 0:
+            check_day = check_day + d
+            if check_sunday(check_day):
+                pass
+            else:
+                if check_holiday(check_day):
+                    pass
+                else:
+                    delta_horas = delta_horas + delta_dia
+            run = run - 1
+        if first_day_start > dateTimeOld:
+            delta_start = timedelta(hours=12)
+        else:
+            if dateTimeOld > first_day_end:
+                delta_start = timedelta(hours=0)
+            else:
+                delta_start = first_day_end - dateTimeOld
+                pass
+
+        if last_day_start > dateTimeNew:
+            delta_end = timedelta(hours=0)
+        else:
+            if dateTimeNew > last_day_end:
+                delta_end = timedelta(hours=12)
+            else:
+                delta_end = dateTimeNew - last_day_start
+                pass
+                        
+        delta_total = delta_start + delta_horas + delta_end
+        logger.info('SLA total: %s' % delta_total)
+
+    else:
+        if first_day_start > dateTimeOld:
+            dateTimeOld = first_day_start
+
+        if last_day_end < dateTimeNew:
+            dateTimeNew = last_day_end
+
+        delta_total = dateTimeNew - dateTimeOld
+        logger.info('SLA total: %s' % delta_total)
+
+    d =  divmod(delta_total.total_seconds(), 86400) #days
+    h = divmod(d[1],3600)  # hours
+    m = divmod(h[1],60)  # minutes
+    s = m[1]  # seconds
+
+    return '%d dias, %d horas, %d minutos e %d segundos' % (d[0],h[0],m[0],s)
 
 #Returns delta time between two dates.
 def getDeltaTimeBrazilianDateTimeStrings(old_date_time_joined_string, new_date_time_joined_string):
@@ -147,7 +241,8 @@ def getSchemaFilenameForPrefix(prefix):
     logger = logging.getLogger(__name__)
 
     if prefix in ["MCO"]:
-      return 'MCO_20170607_150100_D02.cxsd'
+      #return 'MCO_20170607_150100_D02.cxsd'
+      return 'MCO_20170612_153050_D03.cxsd'
 
     if prefix in ["COR9_"]:
       return 'COR09.cxsd'
