@@ -73,8 +73,8 @@ def init(arg):
   #outputORMFile = outputORMPath + outputORMFileName
 
   global outputORMPath_InDataDomain, outputORMFileName_InDataDomain, outputORMFile_InDataDomain
-  outputORMPath_InDataDomain = "../OdooImporter/data/mco/models/"
-  outputORMFileName_InDataDomain = "mco_model.py"
+  outputORMPath_InDataDomain = "/opt/odoo-dev/tools/OdooImporter/data/ipo/models/"
+  outputORMFileName_InDataDomain = "ipo_main_model.py"
   outputORMFile_InDataDomain = outputORMPath_InDataDomain + outputORMFileName_InDataDomain
 
   
