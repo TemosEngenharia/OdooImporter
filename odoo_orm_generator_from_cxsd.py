@@ -242,9 +242,12 @@ def main():
 
     # RUNNING
     #Schema chooser
-    filename = "MCO"
+#    filename = "MCO"
+#    config.inputCXSDPath = "data/mco/schemas/"
+    
+    filename = "IPO"
+    config.inputCXSDPath = "/opt/odoo-dev/tools/OdooImporter/data/ipo/schemas/"
 
-    config.inputCXSDPath = "data/mco/schemas/"
     config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
     config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 

@@ -1,0 +1,2181 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Entry nodePath="/Entry" nodeType="complex" odooClass="IPOMain" odooDT="" odooField="">
+
+   <!--DEFINICAO DOS MODELS-->
+    <Models>
+        <Model  nodePath="Entry/Models/Model" 
+                nodeType="mainClass" 
+                odooClass="IPOMain" 
+                odooDT="ipo.main" 
+                odooField="_name" 
+                odooRecName="task_request_number" 
+                odooSQLConstraints="[('ipo.main', 'unique (xml_source_filename)', 'XML já foi importado anteriormente!')]">     
+        </Model>
+        
+        <Model  nodePath="/Entry/Files/File" 
+                nodeType="childClass" 
+                odooClass="IPOMainPicFiles" 
+                odooDT="ipo.main_pic_files" 
+                odooField="_name" 
+                odooRecName="id" 
+                odooSQLConstraints="">  
+        </Model>
+
+        <Model  nodePath="/Entry/Form/Fields/Field[Id='equipment_list']/Rows/Row" 
+                nodeType="childClass" 
+                odooClass="IPOMainEquipments" 
+                odooDT="ipo.main_equipments" 
+                odooField="_name" 
+                odooRecName="equipment_name" 
+                odooSQLConstraints="">  
+        </Model>
+
+    </Models>
+
+    <!--ADICIONANDO CAMPOS EXTRAS-->
+    <ExtraFields>
+
+        <!--Data e hora do formulário-->
+        <ExtraField     nodePath="/Entry/EntryDate" 
+                        nodeType="extraField" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Datetime(string=u'Data do Formulário')" 
+                        odooField="form_date_time"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+        <ExtraField     nodePath="/Entry/Form/Name" 
+                        nodeType="extraField" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'XML importado', default='')" 
+                        odooField="xml_source_filename"
+                        getValueOf="getXMLFilename()">
+                Nome do XML importado(Usado na constraint para evitar duplicidade)
+        </ExtraField>
+
+        <!--Data e hora da entrada 33-->
+        <ExtraField     nodePath="/Entry/EntryLocation/Date" 
+                        nodeType="extraField" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Datetime(string=u'Data da Localização')" 
+                        odooField="form_location_date"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+        <!--Data e hora Horário da ligação de Check-in-->
+        <ExtraField     nodePath="/Entry/Form/Fields/Field[Id='checkin_call_datetime']/Value" 
+                        nodeType="extraField" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Datetime(string=u'Horário da ligação de Check-in')"
+                        odooField="checkin_call_datetime"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+
+        <!--Data e hora Horário da ligação de Check-out-->
+        <ExtraField     nodePath="/Entry/Form/Fields/Field[Id='checkout_call_datetime']/Value" 
+                        nodeType="extraField" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Datetime(string=u'Horário da ligação de Check-out')"
+                        odooField="checkout_call_datetime"
+                        getValueOf="getSQLDateTimeFromJoinedStringBrazilian(xmlDoc.xpath(nodePath)[0].text)">
+                10012017121749
+        </ExtraField>
+
+
+    </ExtraFields>
+
+
+	<EventType>1</EventType>
+	<EventDate>19062017103154</EventDate>
+	<EventDateAge>-8</EventDateAge>
+	<EventDateFromEpoch>1497879114000</EventDateFromEpoch>
+	<EntryType>33</EntryType>
+	<EntryGuid>6a85f982-5d7f-4593-a53b-34dcc0570985</EntryGuid>
+	<EntryDate>19062017103138</EntryDate>
+	<EntryDateAge>-25</EntryDateAge>
+
+    <!--Data e Hora do envio ao OfficeTrack da entrada 33 em ms desde 1970/1/1-->
+    <EntryDateFromEpoch nodePath="/Entry/EntryDateFromEpoch" 
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Data Epoch da Entrada')" 
+                        odooField="entry_date_from_epoch">
+                        1484057895000
+    </EntryDateFromEpoch>
+
+    <!--Origem da entrada dos dados-->
+    <EntrySource>4</EntrySource>
+
+
+    <!--Localização de onde o colaborador enviou a entrada-->
+    <EntryLocation  nodePath="/Entry/EntryLocation" 
+                    nodeType="complex" 
+                    odooClass="IPOMain" 
+                    odooDT="" 
+                    odooField="">
+
+        <!--POI ou Endereço de onde foi feita a entrada-->
+        <Address    nodePath="/Entry/EntryLocation/Address" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Endereço')" 
+                    odooField="location_address">
+                    Posto Winner
+        </Address>
+
+        <!--Longitude do local-->
+        <X  nodePath="/Entry/EntryLocation/X" 
+            nodeType="simple" 
+            odooClass="IPOMain" 
+            odooDT="fields.Char(string=u'longitude')" 
+            odooField="location_x">
+            -46.7323303222656
+        </X>
+
+        <!--Latitude do local-->
+        <Y  nodePath="/Entry/EntryLocation/Y" 
+            nodeType="simple" 
+            odooClass="IPOMain" 
+            odooDT="fields.Char(string=u'latitude')" 
+            odooField="location_y">
+            -23.5872573852539
+        </Y>
+
+        <!--Número do aparelho utilizado para envio da entrada-->
+        <MSISDN>+5515997536971</MSISDN>
+        
+        <!--Data e hora da entrada 33-->
+        <Date>
+                10012017121749
+        </Date>
+        
+        <DateAge>-56</DateAge>
+        
+        <DateFromEpoch  nodePath="/Entry/EntryLocation/DateFromEpoch" 
+                        nodeType="simple" odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Data Formulário from Epoch')" 
+                        odooField="location_date_from_epoch">
+                        1484057869000
+        </DateFromEpoch>
+
+    </EntryLocation>
+
+    <!--IMAGENS BASE64-->
+    <Files  nodePath="/Entry/Files/File[?]" 
+            nodeType="mainFields" 
+            odooClass="IPOMainPicFiles" 
+            odooDT="" 
+            odooField="">
+
+        <File   nodePath="/Entry/Files/File[?]" 
+                nodeType="childField" 
+                odooClass="IPOMainPicFiles" 
+                odooDT="" 
+                odooField="">
+
+            <Guid   nodePath="/Entry/Files/File[?]/Guid" 
+                    nodeType="childFieldData" 
+                    odooClass="IPOMainPicFiles" 
+                    odooDT="fields.Char(string=u'Guid da Foto')" 
+                    odooField="pic_file_guid">
+                    d091c557-d176-443d-aa19-0e7fe0a78ad6
+            </Guid>
+            
+            <Filename   nodePath="/Entry/Files/File[?]/Filename" 
+                        nodeType="childFieldData" 
+                        odooClass="IPOMainPicFiles" 
+                        odooDT="fields.Char(string=u'Nome do arquivo da Foto')" 
+                        odooField="pic_filename">
+                        7685d8d3-6fcb-4752-a3f8-0c33c6ba0c74_0.jpg
+            </Filename>
+            
+            <Id     nodePath="/Entry/Files/File[?]/Id" 
+                    nodeType="childFieldData" 
+                    odooClass="IPOMainPicFiles" 
+                    odooDT="fields.Char(string=u'Descrição da Foto')" 
+                    odooField="pic_description">
+                    IMAGENS COMPLEMENTARES
+            </Id>
+
+            <Data   nodePath="/Entry/Files/File[?]/Data" 
+                    nodeType="childFieldData" 
+                    odooClass="IPOMainPicFiles" 
+                    odooDT="fields.Char(string=u'Foto')" 
+                    odooField="pic_file_data">
+                    SAMPLE DATA BASE64:9j/4AAQSFSoozjv6VOv7s98d6HG41qYmmwbRIwPKyHgdM56V1Wg3Am0y6ibH7s7lz6nqawbSIq8/cFzgYrd8PgJaXmVw2R06VnZDTXU//2Q==
+            </Data>
+
+        </File>
+
+    </Files>
+
+    <Form   nodePath="/Entry/Form" 
+            nodeType="complex" 
+            odooClass="IPOMain" 
+            odooDT="" 
+            odooField="">
+        <Name   nodePath="/Entry/Form/Name" 
+                nodeType="simple" 
+                odooClass="IPOMain" 
+                odooDT="fields.Char(string=u'Formulário')" 
+                odooField="form_name">
+                [1.1.0] Instalação Posto - Início | IPO | P01
+        </Name>
+
+		<Version>2</Version>
+		<CustomerNumber>6682</CustomerNumber>
+		
+		<Fields     nodePath="/Entry/Form/Fields" 
+                    nodeType="multipleField" 
+                    odooClass="IPOMain" 
+                    odooDT="" 
+                    odooField="">
+
+			<Field>
+				<Id>checkin_call_datetime</Id>
+				<Value>190620171017</Value>
+			</Field>
+
+
+			<Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="IPOMain" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='checkin_call_duration']/Value"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Integer(string=u'Duração da ligação Check-in?')" 
+                        odooField="checkin_call_duration">
+                        checkin_call_duration
+                </Id>
+                <Value>11</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="IPOMain" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='checkin_attendant_by']/Value"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Atendente que realizou o Check-in na PA')" 
+                        odooField="checkin_attendant_by">
+                        checkin_attendant_by
+                </Id>
+                <Value>Windsor</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="IPOMain" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='station_responsible_name']/Value"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Nome do responsável pelo Posto')" 
+                        odooField="station_responsible_name">
+                        station_responsible_name
+                </Id>
+                <Value>Luciano Batista</Value>
+            </Field>
+
+
+            <Field  nodePath="/Entry/Form/Fields/Field" 
+                    nodeType="complexFieldIdValue" 
+                    odooClass="IPOMain" 
+                    odooDT="" 
+                    odooField="">
+
+                <Id     nodePath="/Entry/Form/Fields/Field[Id='station_responsible_email']/Value"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'E-mail do posto')" 
+                        odooField="station_responsible_email">
+                        station_responsible_email
+                </Id>
+                <Value>bordo@esagestao.com.br</Value>
+            </Field>
+
+
+		</Fields>
+	</Form>
+
+    <!--FUNCIONARIO-->
+    <Employee   nodePath="/Entry/Employee" 
+                nodeType="complex" 
+                odooClass="IPOMain" 
+                odooDT="" 
+                odooField="">
+    
+        <FirstName  nodePath="/Entry/Employee/FirstName" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Nome do Funcionário')" 
+                    odooField="employee_firstname">
+                    Raphael
+        </FirstName>
+
+        <Email  nodePath="/Entry/Employee/Email" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Email do Funcionário')" 
+                    odooField="employee_email">
+                    temos.sor01@gmail.com
+        </Email>
+
+        <EmployeeNumber     nodePath="/Entry/Employee/EmployeeNumber" 
+                            nodeType="simple" 
+                            odooClass="IPOMain" 
+                            odooDT="fields.Char(string=u'Nr. do Funcionário')" 
+                            odooField="employee_number">
+                            3002
+        </EmployeeNumber>
+
+        <DriverID   nodePath="/Entry/Employee/DriverID" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Integer(string=u'Código do Motorista')" 
+                    odooField="employee_driver_id">
+                    102
+        </DriverID>
+
+        <Group>
+            <Name   nodePath="/Entry/Employee/Group/Name" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Grupo do Funcionário')" 
+                    odooField="employee_group_name">
+                    ABASTECE
+            </Name>
+        </Group>
+    
+    </Employee>
+
+    <!--TASK-->
+	<Task>
+		<TaskNumber     nodePath="/Entry/Task/TaskNumber"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Número da tarefa no OfficeTrack')" 
+                        odooField="ot_task_number">
+                        13392
+        </TaskNumber>
+
+
+        <Status>8</Status>
+		<Priority>3</Priority>
+		
+		<Description    nodePath="/Entry/Task/Description"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Descrição do Chamado')" 
+                        odooField="task_description">
+                        TASK0215438 [1.1.0] Instalação Posto - Início
+        </Description>
+
+		<Notes  nodePath="/Entry/Task/Notes"
+                nodeType="simple" 
+                odooClass="IPOMain" 
+                odooDT="fields.Char(string=u'Notas da tarefa pelo atribuidor')" 
+                odooField="task_notes">
+                INSTALAÇÃO DO POSTO - INÍCIO
+        </Notes>
+
+
+        <Data1  nodePath="/Entry/Task/Data1"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Data1 - Resumo')" 
+                        odooField="task_data1">
+                        Short Description from ServiceNow
+        </Data1>
+
+
+        <Data2          nodePath="/Entry/Task/Data2"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Data2 - Prioridade')" 
+                        odooField="task_data2">
+                        Normal
+        </Data2>
+
+        <Data3          nodePath="/Entry/Task/Data3"
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Data3 - TASK KEY ID para Link')" 
+                        odooField="task_key_id">
+                        TASK0215438
+        </Data3>
+
+
+		<!--Extra Field-->
+		<ExternalCreationDate>19062017090000</ExternalCreationDate>
+
+		<ExternalCreationDateAge>-5523</ExternalCreationDateAge>
+		<ExternalCreationDateFromEpoch>1497873600000</ExternalCreationDateFromEpoch>
+		<StartDate>19062017080000</StartDate>
+		<StartDateAge>-9123</StartDateAge>
+		<StartDateFromEpoch>1497870000000</StartDateFromEpoch>
+		<DueDate>21062017173000</DueDate>
+		<DueDateAge>197876</DueDateAge>
+		<DueDateFromEpoch>1498077000000</DueDateFromEpoch>
+		<CreationDate>19062017091600</CreationDate>
+		<CreationDateAge>-4563</CreationDateAge>
+		<CreationDateFromEpoch>1497874560000</CreationDateFromEpoch>
+		<TimeWindowPriority>1</TimeWindowPriority>
+		<ServiceTime>0</ServiceTime>
+		<Capacity1>0</Capacity1>
+		<Capacity2>0</Capacity2>
+		<Capacity3>0</Capacity3>
+		<Capacity4>0</Capacity4>
+		<Capacity5>0</Capacity5>
+
+
+        <TaskType>
+            <Code   nodePath="/Entry/Task/TaskType/Code"
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Código do tipo da Tarefa do OfficeTrack')" 
+                    odooField="task_type_code">
+                    IPO[1.1.0]
+            </Code>
+
+            <Name   nodePath="/Entry/Task/TaskType/Name"
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Nome do tipo da Tarefa do OfficeTrack')" 
+                    odooField="task_type_name">
+                    [1.1.0] Instalação Posto - Início
+            </Name>
+        </TaskType>
+
+		
+		<TaskCategory>
+            <Code   nodePath="/Entry/Task/TaskCategory/Code"
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Código da Categoria da Tarefa do OfficeTrack')" 
+                    odooField="task_category_code">
+                    IPO[1.1.0]
+            </Code>
+
+            <Name   nodePath="/Entry/Task/TaskCategory/Name"
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Nome da Categoria da Tarefa do OfficeTrack')" 
+                    odooField="task_category_name">
+                    [1.1.0] Instalação Posto - Início
+            </Name>
+        </TaskCategory>
+
+
+		<Employee>
+			<FirstName>Raphael</FirstName>
+			<Email>temos.sor01@gmail.com</Email>
+			<EmployeeNumber>3002</EmployeeNumber>
+			<DriverID>102</DriverID>
+			<Group>
+				<Name>ABASTECE</Name>
+			</Group>
+			<BusyStatus>2</BusyStatus>
+		</Employee>
+		<Customer>
+            <X   nodePath="/Entry/Task/Customer/X" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Latitude Cliente')" 
+                    odooField="task_customer_latitude">
+                    -46.79117
+            </X>
+
+            <Y   nodePath="/Entry/Task/Customer/Y" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Longitude Cliente')" 
+                    odooField="task_customer_longitude">
+                    -23.529
+            </Y>
+
+            <City   nodePath="/Entry/Task/Customer/City" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Cidade')" 
+                    odooField="task_customer_city">
+                    
+            </City>
+
+
+            <CustomerNumber nodePath="/Entry/Task/Customer/CustomerNumber" 
+                            nodeType="simple" 
+                            odooClass="IPOMain" 
+                            odooDT="fields.Char(string=u'Código do Posto')" 
+                            odooField="task_customer_number">
+                            6682
+            </CustomerNumber>
+
+            <HouseNum   nodePath="/Entry/Task/Customer/HouseNum" 
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Nr')" 
+                        odooField="task_customer_address_number">
+                        SP
+            </HouseNum>
+
+            <Name   nodePath="/Entry/Task/Customer/Name" 
+                    nodeType="simple" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Char(string=u'Nome do Posto')" 
+                    odooField="task_customer_name">
+                    Posto Shell Winner
+            </Name>
+
+            <State  nodePath="/Entry/Task/Customer/State" 
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Estado')" 
+                        odooField="task_customer_state">
+                        
+            </State>
+
+            <Street     nodePath="/Entry/Task/Customer/Street" 
+                        nodeType="simple" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.Char(string=u'Endereço')" 
+                        odooField="task_customer_street">
+                        
+            </Street>
+
+
+			<Layer>
+				<Name>ABASTECE</Name>
+			</Layer>
+		</Customer>
+	</Task>
+	<ReferencedPointsOfInterest>
+		<PointOfInterest>
+			<CustomerNumber>6682</CustomerNumber>
+			<Name>Posto Shell Winner</Name>
+			<X>-46.79117</X>
+			<Y>-23.529</Y>
+			<Layer>
+				<Name>ABASTECE</Name>
+			</Layer>
+		</PointOfInterest>
+	</ReferencedPointsOfInterest>
+
+    <Relationships>
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="IPOMainPicFiles" 
+                        odooDT="fields.One2many('ipo.main_pic_files', 'main_pic_id', u'Form File Id')" 
+                        odooField="main_pic_ids"
+                        getValueOf="">
+        </Relationship>
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="IPOMainPicFiles" 
+                        odooDT="fields.Many2one('ipo.main', u'Fotos', ondelete='cascade', required=True)" 
+                        odooField="main_pic_id"
+                        getValueOf="getMainId()">
+        </Relationship>
+
+
+
+        <!-- Photo will be updated in a process related with FormFiles -->
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC01|Foto do posto antes da instalação')" 
+                    odooField="main_pic01_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic01_id.main_pic_data')" 
+                    odooField="main_pic01_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC02|Assinatura do Responsável do Posto')" 
+                    odooField="main_pic02_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic02_id.main_pic_data')" 
+                    odooField="main_pic02_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC03|Colaborador 1 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic03_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic03_id.main_pic_data')" 
+                    odooField="main_pic03_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC04|Colaborador 2 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic04_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic04_id.main_pic_data')" 
+                    odooField="main_pic04_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC05|Foto EPC na pista')" 
+                    odooField="main_pic05_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic05_id.main_pic_data')" 
+                    odooField="main_pic05_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC06|Foto do local ANTES de instalar o painel. (Foto na Vertical)')" 
+                    odooField="main_pic06_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic06_id.main_pic_data')" 
+                    odooField="main_pic06_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC07|Foto do Painel Instalado Aberto. (Foto na Vertical)')" 
+                    odooField="main_pic07_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic07_id.main_pic_data')" 
+                    odooField="main_pic07_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC08|Foto do Painel Instalado FECHADO. (Foto na Vertical)')" 
+                    odooField="main_pic08_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic08_id.main_pic_data')" 
+                    odooField="main_pic08_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC09|Foto do Painel Instalado LACRADO com vista da CANALETA até o TETO. (Foto na Vertical)')" 
+                    odooField="main_pic09_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic09_id.main_pic_data')" 
+                    odooField="main_pic09_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC10|Imagem da Câmera OCR (Foto na Vertical)')" 
+                    odooField="main_pic10_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic10_id.main_pic_data')" 
+                    odooField="main_pic10_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC11|Imagem da Câmera Lateral (Foto na Vertical)')" 
+                    odooField="main_pic11_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic11_id.main_pic_data')" 
+                    odooField="main_pic11_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC12|Foto do TETO ANTES (Foto na Vertical')" 
+                    odooField="main_pic12_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic12_id.main_pic_data')" 
+                    odooField="main_pic12_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC13|Foto do TETO APÓS (Foto na Vertical)')" 
+                    odooField="main_pic13_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic13_id.main_pic_data')" 
+                    odooField="main_pic13_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC14|Assinatura Colaborador Temos')" 
+                    odooField="main_pic14_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic14_id.main_pic_data')" 
+                    odooField="main_pic14_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC15|Colaborador 1 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic15_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic15_id.main_pic_data')" 
+                    odooField="main_pic15_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC16|Colaborador 2 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic16_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic16_id.main_pic_data')" 
+                    odooField="main_pic16_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC17|Foto EPC na pista')" 
+                    odooField="main_pic17_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic17_id.main_pic_data')" 
+                    odooField="main_pic17_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC18|Foto do local ANTES de instalar o painel. (Foto na Vertical)')" 
+                    odooField="main_pic18_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic18_id.main_pic_data')" 
+                    odooField="main_pic18_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC19|Foto do Painel Instalado Aberto. (Foto na Vertical)')" 
+                    odooField="main_pic19_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic19_id.main_pic_data')" 
+                    odooField="main_pic19_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC20|Foto do Painel Instalado FECHADO. (Foto na Vertical)')" 
+                    odooField="main_pic20_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic20_id.main_pic_data')" 
+                    odooField="main_pic20_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC21|Foto do Painel Instalado LACRADO com vista da CANALETA até o TETO. (Foto na Vertical)')" 
+                    odooField="main_pic21_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic21_id.main_pic_data')" 
+                    odooField="main_pic21_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC22|Imagem da Câmera OCR (Foto na Vertical)')" 
+                    odooField="main_pic22_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic22_id.main_pic_data')" 
+                    odooField="main_pic22_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC23|Imagem da Câmera Lateral (Foto na Vertical)')" 
+                    odooField="main_pic23_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic23_id.main_pic_data')" 
+                    odooField="main_pic23_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC24|Foto do TETO ANTES (Foto na Vertical)')" 
+                    odooField="main_pic24_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic24_id.main_pic_data')" 
+                    odooField="main_pic24_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC25|Foto do TETO APÓS (Foto na Vertical)')" 
+                    odooField="main_pic25_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic25_id.main_pic_data')" 
+                    odooField="main_pic25_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC26|ssinatura Colaborador Temos')" 
+                    odooField="main_pic26_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic26_id.main_pic_data')" 
+                    odooField="main_pic26_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC27|Colaborador 1 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic27_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic27_id.main_pic_data')" 
+                    odooField="main_pic27_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC28|Colaborador 2 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic28_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic28_id.main_pic_data')" 
+                    odooField="main_pic28_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC29|Foto EPC na pista')" 
+                    odooField="main_pic29_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic29_id.main_pic_data')" 
+                    odooField="main_pic29_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC30|Foto do local ANTES de instalar o painel. (Foto na Vertical)')" 
+                    odooField="main_pic30_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic30_id.main_pic_data')" 
+                    odooField="main_pic30_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC31|Foto do Painel Instalado Aberto. (Foto na Vertical)')" 
+                    odooField="main_pic31_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic31_id.main_pic_data')" 
+                    odooField="main_pic31_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC32|Foto do Painel Instalado FECHADO. (Foto na Vertical)')" 
+                    odooField="main_pic32_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic32_id.main_pic_data')" 
+                    odooField="main_pic32_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC33|Foto do Painel Instalado LACRADO com vista da CANALETA até o TETO. (Foto na Vertical)')" 
+                    odooField="main_pic33_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic33_id.main_pic_data')" 
+                    odooField="main_pic33_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC34|Imagem da Câmera OCR (Foto na Vertical)')" 
+                    odooField="main_pic34_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic34_id.main_pic_data')" 
+                    odooField="main_pic34_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC35|Imagem da Câmera Lateral (Foto na Vertical)')" 
+                    odooField="main_pic35_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic35_id.main_pic_data')" 
+                    odooField="main_pic35_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC36|Foto do TETO ANTES (Foto na Vertical)')" 
+                    odooField="main_pic36_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic36_id.main_pic_data')" 
+                    odooField="main_pic36_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC37|Foto do TETO APÓS (Foto na Vertical)')" 
+                    odooField="main_pic37_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic37_id.main_pic_data')" 
+                    odooField="main_pic37_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC38|Assinatura Colaborador Temos')" 
+                    odooField="main_pic38_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic38_id.main_pic_data')" 
+                    odooField="main_pic38_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC39|Colaborador 1 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic39_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic39_id.main_pic_data')" 
+                    odooField="main_pic39_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC40|Colaborador 2 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic40_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic40_id.main_pic_data')" 
+                    odooField="main_pic40_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC41|Foto EPC na pista')" 
+                    odooField="main_pic41_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic41_id.main_pic_data')" 
+                    odooField="main_pic41_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC42|Foto do local ANTES de instalar o painel. (Foto na Vertical)')" 
+                    odooField="main_pic42_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic42_id.main_pic_data')" 
+                    odooField="main_pic42_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC43|Foto do Painel Instalado Aberto. (Foto na Vertical)')" 
+                    odooField="main_pic43_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic43_id.main_pic_data')" 
+                    odooField="main_pic43_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC44|Foto do Painel Instalado FECHADO. (Foto na Vertical)')" 
+                    odooField="main_pic44_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic44_id.main_pic_data')" 
+                    odooField="main_pic44_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC45|Foto do Painel Instalado LACRADO com vista da CANALETA até o TETO. (Foto na Vertical)')" 
+                    odooField="main_pic45_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic45_id.main_pic_data')" 
+                    odooField="main_pic45_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC46|Imagem da Câmera OCR (Foto na Vertical)')" 
+                    odooField="main_pic46_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic46_id.main_pic_data')" 
+                    odooField="main_pic46_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC47|Imagem da Câmera Lateral (Foto na Vertical)')" 
+                    odooField="main_pic47_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic47_id.main_pic_data')" 
+                    odooField="main_pic47_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC48|Foto do TETO ANTES (Foto na Vertical)')" 
+                    odooField="main_pic48_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic48_id.main_pic_data')" 
+                    odooField="main_pic48_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC49|Foto do TETO APÓS (Foto na Vertical)')" 
+                    odooField="main_pic49_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic49_id.main_pic_data')" 
+                    odooField="main_pic49_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC50|Assinatura Colaborador Temos')" 
+                    odooField="main_pic50_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic50_id.main_pic_data')" 
+                    odooField="main_pic50_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC51|Colaborador 1 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic51_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic51_id.main_pic_data')" 
+                    odooField="main_pic51_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC52|Colaborador 2 da Temos com os EPIs para atendimento')" 
+                    odooField="main_pic52_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic52_id.main_pic_data')" 
+                    odooField="main_pic52_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC53|Foto do local ANTES de instalar o servidor. (Foto na Vertical)')" 
+                    odooField="main_pic53_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic53_id.main_pic_data')" 
+                    odooField="main_pic53_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC54|Foto da tela com a configuração do servidor. (Foto na Vertical)')" 
+                    odooField="main_pic54_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic54_id.main_pic_data')" 
+                    odooField="main_pic54_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC55|Foto do Rack Instalado ABERTO. (Foto na Vertical)')" 
+                    odooField="main_pic55_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic55_id.main_pic_data')" 
+                    odooField="main_pic55_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC56|Foto do Rack Instalado FECHADO. (Foto na Vertical)')" 
+                    odooField="main_pic56_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic56_id.main_pic_data')" 
+                    odooField="main_pic56_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC57|Foto do Kit de Cartões de Cancelamento (Foto na Vertical)')" 
+                    odooField="main_pic57_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic57_id.main_pic_data')" 
+                    odooField="main_pic57_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC58|Tela dos Cartões Cadastrados (Foto na Vertical)')" 
+                    odooField="main_pic58_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic58_id.main_pic_data')" 
+                    odooField="main_pic58_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC59|Sentinela da Entrada (ANTES DA INSTALAÇÃO)')" 
+                    odooField="main_pic59_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic59_id.main_pic_data')" 
+                    odooField="main_pic59_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC60|Sentinela da Entrada (APÓS A INSTALAÇÃO)')" 
+                    odooField="main_pic60_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic60_id.main_pic_data')" 
+                    odooField="main_pic60_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC61|Assinatura do Responsável do Posto')" 
+                    odooField="main_pic61_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic61_id.main_pic_data')" 
+                    odooField="main_pic61_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC62|Colaborador Temos com os EPIs (Selfie na Vertical)')" 
+                    odooField="main_pic62_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic62_id.main_pic_data')" 
+                    odooField="main_pic62_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC63|Adesivo/Anexo a placa sentinela (Foto na Vertical)')" 
+                    odooField="main_pic63_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic63_id.main_pic_data')" 
+                    odooField="main_pic63_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC64|Número da Bomba (Pump Number) (Foto na Vertical)')" 
+                    odooField="main_pic64_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic64_id.main_pic_data')" 
+                    odooField="main_pic64_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC65|Moldura do Painel (Foto na Vertical)')" 
+                    odooField="main_pic65_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic65_id.main_pic_data')" 
+                    odooField="main_pic65_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC66|Colaborador Temos com os EPIs (Selfie na Vertical)')" 
+                    odooField="main_pic66_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic66_id.main_pic_data')" 
+                    odooField="main_pic66_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC67|Adesivo/Anexo a placa sentinela (Foto na Vertical)')" 
+                    odooField="main_pic67_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic67_id.main_pic_data')" 
+                    odooField="main_pic67_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC68|Número da Bomba (Pump Number) (Foto na Vertical)')" 
+                    odooField="main_pic68_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic68_id.main_pic_data')" 
+                    odooField="main_pic68_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC69|Moldura do Painel (Foto na Vertical)')" 
+                    odooField="main_pic69_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic69_id.main_pic_data')" 
+                    odooField="main_pic69_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC70|Colaborador Temos com os EPIs (Selfie na Vertical)')" 
+                    odooField="main_pic70_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic70_id.main_pic_data')" 
+                    odooField="main_pic70_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC71|Adesivo/Anexo a placa sentinela (Foto na Vertical)')" 
+                    odooField="main_pic71_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic71_id.main_pic_data')" 
+                    odooField="main_pic71_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC72|Número da Bomba (Pump Number) (Foto na Vertical)')" 
+                    odooField="main_pic72_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic72_id.main_pic_data')" 
+                    odooField="main_pic72_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC73|Moldura do Painel (Foto na Vertical)')" 
+                    odooField="main_pic73_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic73_id.main_pic_data')" 
+                    odooField="main_pic73_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC74|Colaborador Temos com os EPIs (Selfie na Vertical)')" 
+                    odooField="main_pic74_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic74_id.main_pic_data')" 
+                    odooField="main_pic74_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC75|Adesivo/Anexo a placa sentinela (Foto na Vertical)')" 
+                    odooField="main_pic75_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic75_id.main_pic_data')" 
+                    odooField="main_pic75_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC76|Número da Bomba (Pump Number) (Foto na Vertical)')" 
+                    odooField="main_pic76_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic76_id.main_pic_data')" 
+                    odooField="main_pic76_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC77|Moldura do Painel (Foto na Vertical)')" 
+                    odooField="main_pic77_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic77_id.main_pic_data')" 
+                    odooField="main_pic77_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC78|Colaborador Temos com os EPIs (Selfie na Vertical)')" 
+                    odooField="main_pic78_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic78_id.main_pic_data')" 
+                    odooField="main_pic78_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC79|Foto do Quadro Aberto ANTES de instalar o disjuntor. (Foto na Vertical)')" 
+                    odooField="main_pic79_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic79_id.main_pic_data')" 
+                    odooField="main_pic79_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC80|Foto do Quadro Aberto APÓS de instalado o disjuntor com selo Sem Parar. (Foto na Vertical)')" 
+                    odooField="main_pic80_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic80_id.main_pic_data')" 
+                    odooField="main_pic80_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC81|Infraestrutura Foto 1 (Foto na Vertical)')" 
+                    odooField="main_pic81_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic81_id.main_pic_data')" 
+                    odooField="main_pic81_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC84|Infraestrutura Foto 4 (Foto na Vertical)')" 
+                    odooField="main_pic84_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic84_id.main_pic_data')" 
+                    odooField="main_pic84_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC85|Foto dos funcionários do posto que receberam o treinamento.')" 
+                    odooField="main_pic85_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic85_id.main_pic_data')" 
+                    odooField="main_pic85_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC86|Foto da Pista 1 liberada. (Foto na Vertical)')" 
+                    odooField="main_pic86_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic86_id.main_pic_data')" 
+                    odooField="main_pic86_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC87|Foto da Pista 2 liberada. (Foto na Vertical)')" 
+                    odooField="main_pic87_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic87_id.main_pic_data')" 
+                    odooField="main_pic87_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC88|Foto da Pista 3 liberada. (Foto na Vertical)')" 
+                    odooField="main_pic88_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic88_id.main_pic_data')" 
+                    odooField="main_pic88_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC89|Foto da Pista 4 liberada. (Foto na Vertical)')" 
+                    odooField="main_pic89_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic89_id.main_pic_data')" 
+                    odooField="main_pic89_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC90|Assinatura Colaborador Temos')" 
+                    odooField="main_pic90_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic90_id.main_pic_data')" 
+                    odooField="main_pic90_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC90|Foto panorâmica da frente posto homologado (Foto na Horizontal)')" 
+                    odooField="main_pic90_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic90_id.main_pic_data')" 
+                    odooField="main_pic90_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC91|Teste de Abastecimento Pista 1 (Foto na Vertical)')" 
+                    odooField="main_pic91_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic91_id.main_pic_data')" 
+                    odooField="main_pic91_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC92|Teste de Abastecimento Pista 2 (Foto na Vertical)')" 
+                    odooField="main_pic92_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic92_id.main_pic_data')" 
+                    odooField="main_pic92_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC93|Teste de Abastecimento Pista 3 (Foto na Vertical)')" 
+                    odooField="main_pic93_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic93_id.main_pic_data')" 
+                    odooField="main_pic93_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC94|Teste de Abastecimento Pista 4 (Foto na Vertical)')" 
+                    odooField="main_pic94_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic94_id.main_pic_data')" 
+                    odooField="main_pic94_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC95|Captura 1 da tela resultado do Homologa. (Foto na Vertical)')" 
+                    odooField="main_pic95_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic95_id.main_pic_data')" 
+                    odooField="main_pic95_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC96|Captura 2 da tela resultado do Homologa. (Foto na Vertical)')" 
+                    odooField="main_pic96_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic96_id.main_pic_data')" 
+                    odooField="main_pic96_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC97|Captura 3 da tela resultado do Homologa. (Foto na Vertical)')" 
+                    odooField="main_pic97_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic97_id.main_pic_data')" 
+                    odooField="main_pic97_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC98|Captura 4 da tela resultado do Homologa. (Foto na Vertical)')" 
+                    odooField="main_pic98_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic98_id.main_pic_data')" 
+                    odooField="main_pic98_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PIC99|Assinatura Colaborador que efetuou a homologação.')" 
+                    odooField="main_pic99_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_pic99_id.main_pic_data')" 
+                    odooField="main_pic99_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PICASB01|Captura da tela do Sistema Abastece Mostrando Bomba e Bico (Foto na Horizontal) (Pista 1 e 2)')" 
+                    odooField="main_picasb01_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_picasb01_id.main_pic_data')" 
+                    odooField="main_picasb01_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PICASB02|Captura da tela do Sistema Abastece Mostrando Bomba e Bico (Foto na Horizontal) (Pista 3 e 4)')" 
+                    odooField="main_picasb02_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_picasb02_id.main_pic_data')" 
+                    odooField="main_picasb02_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PICASB03|Foto Frontal Bomba Principal - Mostrar Número do Bico e Combustível')" 
+                    odooField="main_picasb03_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_picasb03_id.main_pic_data')" 
+                    odooField="main_picasb03_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PICASB04|Foto do Pump Number Pista Principal')" 
+                    odooField="main_picasb04_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_picasb04_id.main_pic_data')" 
+                    odooField="main_picasb04_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PICASB05|Foto Frontal Bomba Secundária - Mostrar Número do Bico e Combustível')" 
+                    odooField="main_picasb05_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_picasb05_id.main_pic_data')" 
+                    odooField="main_picasb05_img"
+                    getValueOf="">
+    </Relationship>
+    <Relationship nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMain" 
+                    odooDT="fields.Many2one('ipo.main_pic_files', u'PICASB06|Foto do Pump Number Pista Secundária')" 
+                    odooField="main_picasb06_id"
+                    getValueOf="">
+    </Relationship> 
+    <!-- Related to use on Odoo Views Tab Bar -->
+    <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                    nodeType="relationship" 
+                    odooClass="IPOMai" 
+                    odooDT="fields.Char(related='main_picasb06_id.main_pic_data')" 
+                    odooField="main_picasb06_img"
+                    getValueOf="">
+    </Relationship>
+
+
+
+
+
+
+
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="IPOMain" 
+                        odooDT="fields.One2many('ipo.main_equipments', 'equipment_id', u'Equipamento Id')" 
+                        odooField="equipment_ids"
+                        getValueOf="">
+        </Relationship>
+        <Relationship   nodePath="/Entry/Relationships/Relationship" 
+                        nodeType="relationship" 
+                        odooClass="IPOMainEquipments" 
+                        odooDT="fields.Many2one('ipo.main_equipments', u'Lista de Equipamentos', ondelete='cascade', required=True)" 
+                        odooField="equipment_id"
+                        getValueOf="getMainId()">
+        </Relationship>     
+
+    
+    </Relationships>
+</Entry>
