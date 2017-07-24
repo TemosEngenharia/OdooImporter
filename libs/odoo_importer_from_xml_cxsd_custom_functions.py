@@ -240,9 +240,14 @@ def convertDateTimeFromEpochDateTime(datetime_from_epoch_ms):
 def getSchemaFilenameForPrefix(prefix):
     logger = logging.getLogger(__name__)
 
+    if prefix in ["IPO"]:
+      #return 'MCO_20170607_150100_D02.cxsd'
+      return 'IPO_Main_20170619_153000_D01.cxsd'
+
     if prefix in ["MCO"]:
       #return 'MCO_20170607_150100_D02.cxsd'
-      return 'MCO_20170612_153050_D03.cxsd'
+      #return 'MCO_20170612_153050_D03.cxsd'
+      return 'MCO_20170724_102000_D04.cxsd'
 
     if prefix in ["COR9_"]:
       return 'COR09.cxsd'

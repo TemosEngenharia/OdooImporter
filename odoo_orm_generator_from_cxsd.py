@@ -243,8 +243,11 @@ def main():
     # RUNNING
     #Schema chooser
     filename = "MCO"
-
     config.inputCXSDPath = "data/mco/schemas/"
+    
+#    filename = "IPO"
+#    config.inputCXSDPath = "/opt/odoo-dev/tools/OdooImporter/data/ipo/schemas/"
+
     config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
     config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 
@@ -258,7 +261,7 @@ def main():
     #writeOut(outputText,config.outputORMFile)
 
     #Save in Data Domain
-    writeOut(outputText,config.outputORMFile_InDataDomain)
+    #writeOut(outputText,config.outputORMFile_InDataDomain)
 
     #Show result on prompt
     print(outputText)
