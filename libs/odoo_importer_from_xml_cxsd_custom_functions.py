@@ -246,7 +246,8 @@ def getSchemaFilenameForPrefix(prefix):
 
     if prefix in ["MCO"]:
       #return 'MCO_20170607_150100_D02.cxsd'
-      return 'MCO_20170612_153050_D03.cxsd'
+      #return 'MCO_20170612_153050_D03.cxsd'
+      return 'MCO_20170724_102000_D04.cxsd'
 
     if prefix in ["COR9_"]:
       return 'COR09.cxsd'

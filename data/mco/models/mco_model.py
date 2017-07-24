@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# ATT Generated at 2017-06-06 18:56:00
+# ATT Generated at 2017-07-24 14:57:21
 
 from odoo import models, fields, api
 
@@ -26,7 +26,7 @@ class MCorretivaForm(models.Model):
     mco_form_checkin_attendant_by = fields.Char(string=u'Atendente que realizou o Check-in na PA')
     mco_form_station_responsible_name = fields.Char(string=u'Nome do responsável pelo Posto')
     mco_form_station_responsible_email = fields.Char(string=u'E-mail do posto')
-    mco_form_station_first_line_flag = fields.Integer(string=u'PistaP')
+    mco_form_station_first_line_flag = fields.Integer(string=u'PistaPFlag')
     mco_form_station_first_line_activities = fields.Char(string=u'Atividades Realizadas na Pista Principal')
     mco_form_station_sec_line_flag = fields.Integer(string=u'PistaSec')
     mco_form_station_sec_line_activities = fields.Char(string=u'Atividades realizadas na Pista Secundária')
@@ -37,6 +37,8 @@ class MCorretivaForm(models.Model):
     mco_form_station_trouble_found = fields.Char(string=u'Problema encontrado no Local')
     mco_form_checkout_call_timing = fields.Integer(string=u'Duração da Ligação de Check-out')
     mco_form_checkout_attendant_by = fields.Char(string=u'Atendente que realizou o Check-out na PA')
+    mco_form_extra_flag = fields.Integer(string=u'ExtraFlag')
+    mco_form_extra_text = fields.Char(string=u'Texto Extra')
     mco_form_employee_firstname = fields.Char(string=u'Nome do Funcionário')
     mco_form_employee_number = fields.Char(string=u'Nr. do Funcionário')
     mco_form_employee_driver_id = fields.Integer(string=u'Código do Motorista')
@@ -111,6 +113,16 @@ class MCorretivaForm(models.Model):
     mco_form_file_pic27_img = fields.Char(related='mco_form_file_pic27_id.mco_form_file_data')
     mco_form_file_pic28_id = fields.Many2one('mcorretiva.mco_form_files', u'PIC28 - Assinatura do Responsável pelo posto')
     mco_form_file_pic28_img = fields.Char(related='mco_form_file_pic28_id.mco_form_file_data')
+    mco_form_file_extrapic01_id = fields.Many2one('mcorretiva.mco_form_files', u'ExtraPIC01 - Foto Extra 1')
+    mco_form_file_extrapic01_img = fields.Char(related='mco_form_file_extrapic01_id.mco_form_file_data')
+    mco_form_file_extrapic02_id = fields.Many2one('mcorretiva.mco_form_files', u'ExtraPIC02 - Foto Extra 2')
+    mco_form_file_extrapic02_img = fields.Char(related='mco_form_file_extrapic02_id.mco_form_file_data')
+    mco_form_file_extrapic03_id = fields.Many2one('mcorretiva.mco_form_files', u'ExtraPIC03 - Foto Extra 3')
+    mco_form_file_extrapic03_img = fields.Char(related='mco_form_file_extrapic03_id.mco_form_file_data')
+    mco_form_file_extrapic04_id = fields.Many2one('mcorretiva.mco_form_files', u'ExtraPIC04 - Foto Extra 4')
+    mco_form_file_extrapic04_img = fields.Char(related='mco_form_file_extrapic04_id.mco_form_file_data')
+    mco_form_file_extrapic05_id = fields.Many2one('mcorretiva.mco_form_files', u'ExtraPIC05 - Foto Extra 5')
+    mco_form_file_extrapic05_img = fields.Char(related='mco_form_file_extrapic05_id.mco_form_file_data')
     mco_form_equipment_ids = fields.One2many('mcorretiva.mco_form_equipments', 'mco_form_equip_id', u'Equip Id')
 
 class MCorretivaFormFiles(models.Model):
