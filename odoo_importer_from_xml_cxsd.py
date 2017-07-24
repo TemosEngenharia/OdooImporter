@@ -742,8 +742,8 @@ def main():
         if filename[:len(file_prefix)]==file_prefix: 
             logger.info("> > > >"+ filename)
 
-            #try:
-            if 0==0:
+            try:
+            # if 0==0:
                 config.inputXMLFileName = filename
                 config.inputXMLFile = config.inputXMLPath + config.inputXMLFileName
 
@@ -754,7 +754,7 @@ def main():
 
 
                 #Schema chooser
-                config.inputCXSDPath = "../OdooImporter/data/mco/schemas/"
+                config.inputCXSDPath = "/opt/odoo_prd/tools/OdooImporter/data/mco/schemas/"
                 config.inputCXSDFileName = cfuncs.getSchemaFilenameForPrefix(filename[:3])
                 config.inputCXSDFile = config.inputCXSDPath + config.inputCXSDFileName
 
@@ -770,24 +770,23 @@ def main():
                 logger.info("\n#EOF status:" + str(status))
 
             #try:
-                ab=""
-            #except Exception as e:
-                #raise e
-                #logger.error("Error:" + config.inputXMLFile + "\n" + str(e))
-                #logger.error(e)
+                #ab=""
+            except Exception as e:
+                raise e
+                logger.error("Error:" + config.inputXMLFile + "\n" + str(e))
+                logger.error(e)
 
-                #status = False
+                status = False
                 
-                #pass
+                pass
 
             #move file to OK Subfolder
-
-            #if status==True:
+            if status==True:
                 rename(config.inputXMLFile, config.inputXMLPath + "processed/" + config.inputXMLFileName)
 
             #move file to ERRORS Subfolder
-            ##if status==False:
-            ##   rename(config.inputXMLFile, config.inputXMLPath + "errors/" + config.inputXMLFileName)  
+            if status==False:
+                rename(config.inputXMLFile, config.inputXMLPath + "errors/" + config.inputXMLFileName)  
 
 
 
